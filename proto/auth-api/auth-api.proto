@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 package auth_api;
 
 option go_package = "deimos.auth_api.v1;auth_apiv1";
@@ -7,7 +9,7 @@ option go_package = "deimos.auth_api.v1;auth_apiv1";
 service AuthAPI {
     rpc Register (RegisterRequest) returns (RegisterResponse) {}
     rpc Login (LoginRequest) returns (LoginResponse) {}
-    rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse) {}
+    rpc Refresh (RefreshRequest) returns (RefreshResponse) {}
     rpc GetUser (GetUserRequest) returns (GetUserResponse) {}
 }
 
@@ -31,11 +33,11 @@ message LoginResponse {
     string refresh_token = 2;
 }
 
-message RefreshTokenRequest {
+message RefreshRequest {
     string refresh_token = 1;
 }
 
-message RefreshTokenResponse {
+message RefreshResponse {
     string token = 1;
     string refresh_token = 2;
 }
@@ -48,4 +50,5 @@ message GetUserResponse {
     string id = 1;
     string name = 2;
     string email = 3;
+    google.protobuf.Timestamp created_at = 4;
 }

@@ -20,7 +20,11 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-    string message = 1;
+    string id = 1;
+    string email = 2;
+    google.protobuf.Timestamp created_at = 3;
+    string token = 4;
+    string refresh_token = 5;
 }
 
 message LoginRequest {
@@ -29,8 +33,11 @@ message LoginRequest {
 }
 
 message LoginResponse {
-    string token = 1;
-    string refresh_token = 2;
+    string id = 1;
+    string email = 2;
+    string name = 3;
+    string token = 4;
+    string refresh_token = 5;
 }
 
 message RefreshRequest {

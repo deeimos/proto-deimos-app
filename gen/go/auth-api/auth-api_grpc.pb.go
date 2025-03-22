@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthAPI_Register_FullMethodName     = "/auth_api.AuthAPI/Register"
-	AuthAPI_Login_FullMethodName        = "/auth_api.AuthAPI/Login"
-	AuthAPI_RefreshToken_FullMethodName = "/auth_api.AuthAPI/RefreshToken"
-	AuthAPI_GetUser_FullMethodName      = "/auth_api.AuthAPI/GetUser"
+	AuthAPI_Register_FullMethodName = "/auth_api.AuthAPI/Register"
+	AuthAPI_Login_FullMethodName    = "/auth_api.AuthAPI/Login"
+	AuthAPI_Refresh_FullMethodName  = "/auth_api.AuthAPI/Refresh"
+	AuthAPI_GetUser_FullMethodName  = "/auth_api.AuthAPI/GetUser"
 )
 
 // AuthAPIClient is the client API for AuthAPI service.
@@ -31,7 +31,7 @@ const (
 type AuthAPIClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
+	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 }
 
@@ -63,10 +63,10 @@ func (c *authAPIClient) Login(ctx context.Context, in *LoginRequest, opts ...grp
 	return out, nil
 }
 
-func (c *authAPIClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error) {
+func (c *authAPIClient) Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RefreshTokenResponse)
-	err := c.cc.Invoke(ctx, AuthAPI_RefreshToken_FullMethodName, in, out, cOpts...)
+	out := new(RefreshResponse)
+	err := c.cc.Invoke(ctx, AuthAPI_Refresh_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +89,7 @@ func (c *authAPIClient) GetUser(ctx context.Context, in *GetUserRequest, opts ..
 type AuthAPIServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
+	Refresh(context.Context, *RefreshRequest) (*RefreshResponse, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	mustEmbedUnimplementedAuthAPIServer()
 }
@@ -107,8 +107,8 @@ func (UnimplementedAuthAPIServer) Register(context.Context, *RegisterRequest) (*
 func (UnimplementedAuthAPIServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthAPIServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
+func (UnimplementedAuthAPIServer) Refresh(context.Context, *RefreshRequest) (*RefreshResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Refresh not implemented")
 }
 func (UnimplementedAuthAPIServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
@@ -170,20 +170,20 @@ func _AuthAPI_Login_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthAPI_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RefreshTokenRequest)
+func _AuthAPI_Refresh_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RefreshRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthAPIServer).RefreshToken(ctx, in)
+		return srv.(AuthAPIServer).Refresh(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthAPI_RefreshToken_FullMethodName,
+		FullMethod: AuthAPI_Refresh_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthAPIServer).RefreshToken(ctx, req.(*RefreshTokenRequest))
+		return srv.(AuthAPIServer).Refresh(ctx, req.(*RefreshRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -222,8 +222,8 @@ var AuthAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthAPI_Login_Handler,
 		},
 		{
-			MethodName: "RefreshToken",
-			Handler:    _AuthAPI_RefreshToken_Handler,
+			MethodName: "Refresh",
+			Handler:    _AuthAPI_Refresh_Handler,
 		},
 		{
 			MethodName: "GetUser",

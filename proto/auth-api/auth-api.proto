@@ -37,8 +37,9 @@ message LoginResponse {
     string id = 1;
     string email = 2;
     string name = 3;
-    string token = 4;
-    string refresh_token = 5;
+    google.protobuf.Timestamp created_at = 4;
+    string token = 5;
+    string refresh_token = 6;
 }
 
 message RefreshRequest {

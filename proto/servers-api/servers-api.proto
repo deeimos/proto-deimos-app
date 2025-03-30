@@ -6,14 +6,15 @@ package servers_api;
 
 option go_package = "deimos.servers_api.v1;servers_apiv1";
 
-service ServersService {
-  rpc SaveServer(SaveServerRequest) returns (SaveServerResponse) {};
+service ServersAPI {
+  rpc CreateServer(CreateServerRequest) returns (CreateServerResponse) {};
+  rpc UpdateServer(UpdateServerRequest) returns (UpdateServerResponse) {};
   rpc GetServer(GetServerRequest) returns (GetServerResponse) {};
   rpc GetServersList(GetServersListRequest) returns (GetServersListResponse) {};
 }
 
 
-message SaveServerRequest {
+message CreateServerRequest {
   string ip = 1;
   string port = 2;
   string username = 3;
@@ -22,7 +23,20 @@ message SaveServerRequest {
   string display_name = 6;
 }
 
-message SaveServerResponse {
+message CreateServerResponse {
+  string id = 1; 
+}
+
+message UpdateServerRequest {
+  string id = 1;
+  string ip = 2;
+  string port = 3;
+  string username = 4;
+  string password = 5;
+  string name = 6;
+}
+  
+message UpdateServerResponse {
   string id = 1; 
 }
 
@@ -31,12 +45,13 @@ message GetServerRequest {
 }
 
 message GetServerResponse {
-  string ip = 1;
-  string port = 2;
-  string username = 3;
-  string password = 4;
-  string name = 5;
-  google.protobuf.Timestamp created_at = 6;
+  string id = 1;
+  string ip = 2;
+  string port = 3;
+  string username = 4;
+  string password = 5;
+  string name = 6;
+  google.protobuf.Timestamp created_at = 7;
 }
 
 message GetServersListRequest {}

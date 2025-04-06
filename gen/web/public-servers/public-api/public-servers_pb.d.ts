@@ -164,10 +164,10 @@ export namespace GetServersListRequest {
 }
 
 export class GetServersListResponse extends jspb.Message {
-  getServersList(): Array<ServerSummary>;
-  setServersList(value: Array<ServerSummary>): GetServersListResponse;
+  getServersList(): Array<GetServerResponse>;
+  setServersList(value: Array<GetServerResponse>): GetServersListResponse;
   clearServersList(): GetServersListResponse;
-  addServers(value?: ServerSummary, index?: number): ServerSummary;
+  addServers(value?: GetServerResponse, index?: number): GetServerResponse;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetServersListResponse.AsObject;
@@ -179,39 +179,7 @@ export class GetServersListResponse extends jspb.Message {
 
 export namespace GetServersListResponse {
   export type AsObject = {
-    serversList: Array<ServerSummary.AsObject>,
-  }
-}
-
-export class ServerSummary extends jspb.Message {
-  getId(): string;
-  setId(value: string): ServerSummary;
-
-  getEncryptedDisplayName(): string;
-  setEncryptedDisplayName(value: string): ServerSummary;
-
-  getEncryptedIp(): string;
-  setEncryptedIp(value: string): ServerSummary;
-
-  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): ServerSummary;
-  hasCreatedAt(): boolean;
-  clearCreatedAt(): ServerSummary;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ServerSummary.AsObject;
-  static toObject(includeInstance: boolean, msg: ServerSummary): ServerSummary.AsObject;
-  static serializeBinaryToWriter(message: ServerSummary, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ServerSummary;
-  static deserializeBinaryFromReader(message: ServerSummary, reader: jspb.BinaryReader): ServerSummary;
-}
-
-export namespace ServerSummary {
-  export type AsObject = {
-    id: string,
-    encryptedDisplayName: string,
-    encryptedIp: string,
-    createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    serversList: Array<GetServerResponse.AsObject>,
   }
 }
 

@@ -55,14 +55,7 @@ message GetServersListRequest {
 }
 
 message GetServersListResponse {
-  repeated ServerSummary servers = 1;
-}
-
-message ServerSummary {
-  string id = 1;
-  string encrypted_display_name = 2;
-  string encrypted_ip = 3;
-  google.protobuf.Timestamp created_at = 4;
+  repeated GetServerResponse servers = 1;
 }
 
 message ServerMetricsRequest {

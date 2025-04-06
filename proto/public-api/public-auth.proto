@@ -51,9 +51,7 @@ message RefreshResponse {
     string refresh_token = 2;
 }
 
-message GetUserRequest {
-    string token = 1;
-}
+message GetUserRequest {}
 
 message GetUserResponse {
     string id = 1;

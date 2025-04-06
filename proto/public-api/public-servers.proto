@@ -14,13 +14,9 @@ service PublicServers {
 }
 
 message CreateServerRequest {
-  string token = 1;
-  string encrypted_ip = 2;
-  string encrypted_port = 3;
-  string encrypted_username = 4;
-  string encrypted_password = 5;
-  string encrypted_private_key = 6;
-  string encrypted_display_name = 7;
+  string encrypted_ip = 1;
+  string encrypted_port = 2;
+  string encrypted_display_name = 3;
 }
 
 message CreateServerResponse {
@@ -28,14 +24,10 @@ message CreateServerResponse {
 }
 
 message UpdateServerRequest {
-  string token = 1;
-  string id = 2;
-  string encrypted_ip = 3;
-  string encrypted_port = 4;
-  string encrypted_username = 5;
-  string encrypted_password = 6;
-  string encrypted_private_key = 7;
-  string encrypted_display_name = 8;
+  string id = 1;
+  string encrypted_ip = 2;
+  string encrypted_port = 3;
+  string encrypted_display_name = 4;
 }
 
 message UpdateServerResponse {
@@ -44,23 +36,17 @@ message UpdateServerResponse {
 
 message GetServerRequest {
   string id = 1;
-  string token = 2;
 }
 
 message GetServerResponse {
   string id = 1;
   string encrypted_ip = 2;
   string encrypted_port = 3;
-  string encrypted_username = 4;
-  string encrypted_password = 5;
-  string encrypted_private_key = 6;
-  string encrypted_display_name = 7;
-  google.protobuf.Timestamp created_at = 8;
+  string encrypted_display_name = 4;
+  google.protobuf.Timestamp created_at = 5;
 }
 
-message GetServersListRequest {
-  string token = 1;
-}
+message GetServersListRequest {}
 
 message GetServersListResponse {
   repeated ServerSummary servers = 1;

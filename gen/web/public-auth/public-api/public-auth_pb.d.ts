@@ -172,9 +172,6 @@ export namespace RefreshResponse {
 }
 
 export class GetUserRequest extends jspb.Message {
-  getToken(): string;
-  setToken(value: string): GetUserRequest;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetUserRequest.AsObject;
   static toObject(includeInstance: boolean, msg: GetUserRequest): GetUserRequest.AsObject;
@@ -185,7 +182,6 @@ export class GetUserRequest extends jspb.Message {
 
 export namespace GetUserRequest {
   export type AsObject = {
-    token: string,
   }
 }
 

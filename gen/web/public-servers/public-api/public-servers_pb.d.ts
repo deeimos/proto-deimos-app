@@ -4,23 +4,11 @@ import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/t
 
 
 export class CreateServerRequest extends jspb.Message {
-  getToken(): string;
-  setToken(value: string): CreateServerRequest;
-
   getEncryptedIp(): string;
   setEncryptedIp(value: string): CreateServerRequest;
 
   getEncryptedPort(): string;
   setEncryptedPort(value: string): CreateServerRequest;
-
-  getEncryptedUsername(): string;
-  setEncryptedUsername(value: string): CreateServerRequest;
-
-  getEncryptedPassword(): string;
-  setEncryptedPassword(value: string): CreateServerRequest;
-
-  getEncryptedPrivateKey(): string;
-  setEncryptedPrivateKey(value: string): CreateServerRequest;
 
   getEncryptedDisplayName(): string;
   setEncryptedDisplayName(value: string): CreateServerRequest;
@@ -35,12 +23,8 @@ export class CreateServerRequest extends jspb.Message {
 
 export namespace CreateServerRequest {
   export type AsObject = {
-    token: string,
     encryptedIp: string,
     encryptedPort: string,
-    encryptedUsername: string,
-    encryptedPassword: string,
-    encryptedPrivateKey: string,
     encryptedDisplayName: string,
   }
 }
@@ -64,9 +48,6 @@ export namespace CreateServerResponse {
 }
 
 export class UpdateServerRequest extends jspb.Message {
-  getToken(): string;
-  setToken(value: string): UpdateServerRequest;
-
   getId(): string;
   setId(value: string): UpdateServerRequest;
 
@@ -75,15 +56,6 @@ export class UpdateServerRequest extends jspb.Message {
 
   getEncryptedPort(): string;
   setEncryptedPort(value: string): UpdateServerRequest;
-
-  getEncryptedUsername(): string;
-  setEncryptedUsername(value: string): UpdateServerRequest;
-
-  getEncryptedPassword(): string;
-  setEncryptedPassword(value: string): UpdateServerRequest;
-
-  getEncryptedPrivateKey(): string;
-  setEncryptedPrivateKey(value: string): UpdateServerRequest;
 
   getEncryptedDisplayName(): string;
   setEncryptedDisplayName(value: string): UpdateServerRequest;
@@ -98,13 +70,9 @@ export class UpdateServerRequest extends jspb.Message {
 
 export namespace UpdateServerRequest {
   export type AsObject = {
-    token: string,
     id: string,
     encryptedIp: string,
     encryptedPort: string,
-    encryptedUsername: string,
-    encryptedPassword: string,
-    encryptedPrivateKey: string,
     encryptedDisplayName: string,
   }
 }
@@ -131,9 +99,6 @@ export class GetServerRequest extends jspb.Message {
   getId(): string;
   setId(value: string): GetServerRequest;
 
-  getToken(): string;
-  setToken(value: string): GetServerRequest;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetServerRequest.AsObject;
   static toObject(includeInstance: boolean, msg: GetServerRequest): GetServerRequest.AsObject;
@@ -145,7 +110,6 @@ export class GetServerRequest extends jspb.Message {
 export namespace GetServerRequest {
   export type AsObject = {
     id: string,
-    token: string,
   }
 }
 
@@ -158,15 +122,6 @@ export class GetServerResponse extends jspb.Message {
 
   getEncryptedPort(): string;
   setEncryptedPort(value: string): GetServerResponse;
-
-  getEncryptedUsername(): string;
-  setEncryptedUsername(value: string): GetServerResponse;
-
-  getEncryptedPassword(): string;
-  setEncryptedPassword(value: string): GetServerResponse;
-
-  getEncryptedPrivateKey(): string;
-  setEncryptedPrivateKey(value: string): GetServerResponse;
 
   getEncryptedDisplayName(): string;
   setEncryptedDisplayName(value: string): GetServerResponse;
@@ -189,18 +144,12 @@ export namespace GetServerResponse {
     id: string,
     encryptedIp: string,
     encryptedPort: string,
-    encryptedUsername: string,
-    encryptedPassword: string,
-    encryptedPrivateKey: string,
     encryptedDisplayName: string,
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
   }
 }
 
 export class GetServersListRequest extends jspb.Message {
-  getToken(): string;
-  setToken(value: string): GetServersListRequest;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetServersListRequest.AsObject;
   static toObject(includeInstance: boolean, msg: GetServersListRequest): GetServersListRequest.AsObject;
@@ -211,7 +160,6 @@ export class GetServersListRequest extends jspb.Message {
 
 export namespace GetServersListRequest {
   export type AsObject = {
-    token: string,
   }
 }
 

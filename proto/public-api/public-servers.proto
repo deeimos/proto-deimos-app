@@ -2,20 +2,19 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-package servers_api;
+package public_api;
 
-option go_package = "deimos.servers_api.v1;servers_apiv1";
+option go_package = "deimos.public_api.v1;public_apiv1";
 
-service ServersAPI {
+service PublicServers {
   rpc CreateServer(CreateServerRequest) returns (CreateServerResponse) {};
   rpc UpdateServer(UpdateServerRequest) returns (UpdateServerResponse) {};
   rpc GetServer(GetServerRequest) returns (GetServerResponse) {};
   rpc GetServersList(GetServersListRequest) returns (GetServersListResponse) {};
-  rpc StreamServerMetrics(ServerMetricsRequest) returns (stream ServerMetric) {};
 }
 
 message CreateServerRequest {
-  string user_id = 1;
+  string token = 1;
   string encrypted_ip = 2;
   string encrypted_port = 3;
   string encrypted_username = 4;
@@ -29,7 +28,7 @@ message CreateServerResponse {
 }
 
 message UpdateServerRequest {
-  string user_id = 1;
+  string token = 1;
   string id = 2;
   string encrypted_ip = 3;
   string encrypted_port = 4;
@@ -45,7 +44,7 @@ message UpdateServerResponse {
 
 message GetServerRequest {
   string id = 1;
-  string user_id = 2;
+  string token = 2;
 }
 
 message GetServerResponse {
@@ -60,7 +59,7 @@ message GetServerResponse {
 }
 
 message GetServersListRequest {
-  string user_id = 1;
+  string token = 1;
 }
 
 message GetServersListResponse {
@@ -72,28 +71,4 @@ message ServerSummary {
   string encrypted_display_name = 2;
   string encrypted_ip = 3;
   google.protobuf.Timestamp created_at = 4;
-}
-
-message ServerMetricsRequest {
-  string server_id = 1;
-  string user_id = 2;
-}
-
-message ServerMetric {
-  double cpu_usage = 1;
-  double memory_usage = 2;
-  double disk_usage = 3;
-  double load_avg_1 = 4;
-  double load_avg_5 = 5;
-  double load_avg_15 = 6;
-  double network_rx = 7;
-  double network_tx = 8;
-  double disk_read = 9;
-  double disk_write = 10;
-  int32 process_count = 11;
-  double io_wait = 12;
-  int64 uptime_seconds = 13;
-  double temperature = 14;
-  string status = 15;
-  google.protobuf.Timestamp timestamp = 16;
 }

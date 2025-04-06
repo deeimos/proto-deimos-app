@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ServersAPI_CreateServer_FullMethodName   = "/servers_api.ServersAPI/CreateServer"
-	ServersAPI_UpdateServer_FullMethodName   = "/servers_api.ServersAPI/UpdateServer"
-	ServersAPI_GetServer_FullMethodName      = "/servers_api.ServersAPI/GetServer"
-	ServersAPI_GetServersList_FullMethodName = "/servers_api.ServersAPI/GetServersList"
+	ServersAPI_CreateServer_FullMethodName        = "/servers_api.ServersAPI/CreateServer"
+	ServersAPI_UpdateServer_FullMethodName        = "/servers_api.ServersAPI/UpdateServer"
+	ServersAPI_GetServer_FullMethodName           = "/servers_api.ServersAPI/GetServer"
+	ServersAPI_GetServersList_FullMethodName      = "/servers_api.ServersAPI/GetServersList"
+	ServersAPI_StreamServerMetrics_FullMethodName = "/servers_api.ServersAPI/StreamServerMetrics"
 )
 
 // ServersAPIClient is the client API for ServersAPI service.
@@ -33,6 +34,7 @@ type ServersAPIClient interface {
 	UpdateServer(ctx context.Context, in *UpdateServerRequest, opts ...grpc.CallOption) (*UpdateServerResponse, error)
 	GetServer(ctx context.Context, in *GetServerRequest, opts ...grpc.CallOption) (*GetServerResponse, error)
 	GetServersList(ctx context.Context, in *GetServersListRequest, opts ...grpc.CallOption) (*GetServersListResponse, error)
+	StreamServerMetrics(ctx context.Context, in *ServerMetricsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerMetric], error)
 }
 
 type serversAPIClient struct {
@@ -83,6 +85,25 @@ func (c *serversAPIClient) GetServersList(ctx context.Context, in *GetServersLis
 	return out, nil
 }
 
+func (c *serversAPIClient) StreamServerMetrics(ctx context.Context, in *ServerMetricsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerMetric], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &ServersAPI_ServiceDesc.Streams[0], ServersAPI_StreamServerMetrics_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[ServerMetricsRequest, ServerMetric]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ServersAPI_StreamServerMetricsClient = grpc.ServerStreamingClient[ServerMetric]
+
 // ServersAPIServer is the server API for ServersAPI service.
 // All implementations must embed UnimplementedServersAPIServer
 // for forward compatibility.
@@ -91,6 +112,7 @@ type ServersAPIServer interface {
 	UpdateServer(context.Context, *UpdateServerRequest) (*UpdateServerResponse, error)
 	GetServer(context.Context, *GetServerRequest) (*GetServerResponse, error)
 	GetServersList(context.Context, *GetServersListRequest) (*GetServersListResponse, error)
+	StreamServerMetrics(*ServerMetricsRequest, grpc.ServerStreamingServer[ServerMetric]) error
 	mustEmbedUnimplementedServersAPIServer()
 }
 
@@ -112,6 +134,9 @@ func (UnimplementedServersAPIServer) GetServer(context.Context, *GetServerReques
 }
 func (UnimplementedServersAPIServer) GetServersList(context.Context, *GetServersListRequest) (*GetServersListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetServersList not implemented")
+}
+func (UnimplementedServersAPIServer) StreamServerMetrics(*ServerMetricsRequest, grpc.ServerStreamingServer[ServerMetric]) error {
+	return status.Errorf(codes.Unimplemented, "method StreamServerMetrics not implemented")
 }
 func (UnimplementedServersAPIServer) mustEmbedUnimplementedServersAPIServer() {}
 func (UnimplementedServersAPIServer) testEmbeddedByValue()                    {}
@@ -206,6 +231,17 @@ func _ServersAPI_GetServersList_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServersAPI_StreamServerMetrics_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ServerMetricsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ServersAPIServer).StreamServerMetrics(m, &grpc.GenericServerStream[ServerMetricsRequest, ServerMetric]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ServersAPI_StreamServerMetricsServer = grpc.ServerStreamingServer[ServerMetric]
+
 // ServersAPI_ServiceDesc is the grpc.ServiceDesc for ServersAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -230,6 +266,12 @@ var ServersAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ServersAPI_GetServersList_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "StreamServerMetrics",
+			Handler:       _ServersAPI_StreamServerMetrics_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "servers-api/servers-api.proto",
 }

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package public_api;
+
+option go_package = "deimos.public_api.v1;public_apiv1";
+
+service PublicMonitoring {
+  rpc StreamServerMetrics(PublicServerMetricsRequest) returns (stream PublicServerMetric) {};
+}
+
+message PublicServerMetricsRequest {
+  string server_id = 1;
+  string token = 2;
+}
+
+message PublicServerMetric {
+  double cpu_usage = 1;
+  double memory_usage = 2;
+  double disk_usage = 3;
+  double load_avg_1 = 4;
+  double load_avg_5 = 5;
+  double load_avg_15 = 6;
+  double network_rx = 7;
+  double network_tx = 8;
+  double disk_read = 9;
+  double disk_write = 10;
+  int32 process_count = 11;
+  double io_wait = 12;
+  int64 uptime_seconds = 13;
+  double temperature = 14;
+  string status = 15;
+  google.protobuf.Timestamp timestamp = 16;
+}

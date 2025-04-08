@@ -17,6 +17,7 @@ message CreateServerRequest {
   string encrypted_ip = 1;
   string encrypted_port = 2;
   string encrypted_display_name = 3;
+  bool is_monitoring_enabled = 5;
 }
 
 message CreateServerResponse {
@@ -28,6 +29,7 @@ message UpdateServerRequest {
   string encrypted_ip = 2;
   string encrypted_port = 3;
   string encrypted_display_name = 4;
+  bool is_monitoring_enabled = 5;
 }
 
 message UpdateServerResponse {
@@ -43,7 +45,8 @@ message GetServerResponse {
   string encrypted_ip = 2;
   string encrypted_port = 3;
   string encrypted_display_name = 4;
-  google.protobuf.Timestamp created_at = 5;
+  bool is_monitoring_enabled = 5;
+  google.protobuf.Timestamp created_at = 6;
 }
 
 message GetServersListRequest {}

@@ -13,6 +13,9 @@ export class CreateServerRequest extends jspb.Message {
   getEncryptedDisplayName(): string;
   setEncryptedDisplayName(value: string): CreateServerRequest;
 
+  getIsMonitoringEnabled(): boolean;
+  setIsMonitoringEnabled(value: boolean): CreateServerRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateServerRequest.AsObject;
   static toObject(includeInstance: boolean, msg: CreateServerRequest): CreateServerRequest.AsObject;
@@ -26,6 +29,7 @@ export namespace CreateServerRequest {
     encryptedIp: string,
     encryptedPort: string,
     encryptedDisplayName: string,
+    isMonitoringEnabled: boolean,
   }
 }
 
@@ -60,6 +64,9 @@ export class UpdateServerRequest extends jspb.Message {
   getEncryptedDisplayName(): string;
   setEncryptedDisplayName(value: string): UpdateServerRequest;
 
+  getIsMonitoringEnabled(): boolean;
+  setIsMonitoringEnabled(value: boolean): UpdateServerRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateServerRequest.AsObject;
   static toObject(includeInstance: boolean, msg: UpdateServerRequest): UpdateServerRequest.AsObject;
@@ -74,6 +81,7 @@ export namespace UpdateServerRequest {
     encryptedIp: string,
     encryptedPort: string,
     encryptedDisplayName: string,
+    isMonitoringEnabled: boolean,
   }
 }
 
@@ -126,6 +134,9 @@ export class GetServerResponse extends jspb.Message {
   getEncryptedDisplayName(): string;
   setEncryptedDisplayName(value: string): GetServerResponse;
 
+  getIsMonitoringEnabled(): boolean;
+  setIsMonitoringEnabled(value: boolean): GetServerResponse;
+
   getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
   setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): GetServerResponse;
   hasCreatedAt(): boolean;
@@ -145,6 +156,7 @@ export namespace GetServerResponse {
     encryptedIp: string,
     encryptedPort: string,
     encryptedDisplayName: string,
+    isMonitoringEnabled: boolean,
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
   }
 }

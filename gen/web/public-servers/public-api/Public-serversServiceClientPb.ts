@@ -168,6 +168,49 @@ export class PublicServersClient {
     this.methodDescriptorGetServer);
   }
 
+  methodDescriptorDeleteServer = new grpcWeb.MethodDescriptor(
+    '/public_api.PublicServers/DeleteServer',
+    grpcWeb.MethodType.UNARY,
+    public$api_public$servers_pb.DeleteServerRequest,
+    public$api_public$servers_pb.DeleteServerResponse,
+    (request: public$api_public$servers_pb.DeleteServerRequest) => {
+      return request.serializeBinary();
+    },
+    public$api_public$servers_pb.DeleteServerResponse.deserializeBinary
+  );
+
+  deleteServer(
+    request: public$api_public$servers_pb.DeleteServerRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<public$api_public$servers_pb.DeleteServerResponse>;
+
+  deleteServer(
+    request: public$api_public$servers_pb.DeleteServerRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: public$api_public$servers_pb.DeleteServerResponse) => void): grpcWeb.ClientReadableStream<public$api_public$servers_pb.DeleteServerResponse>;
+
+  deleteServer(
+    request: public$api_public$servers_pb.DeleteServerRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: public$api_public$servers_pb.DeleteServerResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/public_api.PublicServers/DeleteServer',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteServer,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/public_api.PublicServers/DeleteServer',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteServer);
+  }
+
   methodDescriptorGetServersList = new grpcWeb.MethodDescriptor(
     '/public_api.PublicServers/GetServersList',
     grpcWeb.MethodType.UNARY,

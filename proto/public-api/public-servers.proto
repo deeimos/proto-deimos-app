@@ -10,6 +10,7 @@ service PublicServers {
   rpc CreateServer(CreateServerRequest) returns (CreateServerResponse) {};
   rpc UpdateServer(UpdateServerRequest) returns (UpdateServerResponse) {};
   rpc GetServer(GetServerRequest) returns (GetServerResponse) {};
+  rpc DeleteServer (DeleteServerRequest) returns (DeleteServerResponse) {};
   rpc GetServersList(GetServersListRequest) returns (GetServersListResponse) {};
 }
 
@@ -53,4 +54,13 @@ message GetServersListRequest {}
 
 message GetServersListResponse {
   repeated GetServerResponse servers = 1;
+}
+
+
+message DeleteServerRequest{
+  string id = 1;
+}
+
+message DeleteServerResponse{
+  string id = 1;
 }

@@ -11,6 +11,7 @@ service ServersAPI {
   rpc UpdateServer(UpdateServerRequest) returns (UpdateServerResponse) {};
   rpc GetServer(GetServerRequest) returns (GetServerResponse) {};
   rpc GetServersList(GetServersListRequest) returns (GetServersListResponse) {};
+  rpc DeleteServer (DeleteServerRequest) returns (DeleteServerResponse) {};
   rpc StreamServerMetrics(ServerMetricsRequest) returns (stream ServerMetric) {};
 }
 
@@ -59,6 +60,15 @@ message GetServersListRequest {
 
 message GetServersListResponse {
   repeated GetServerResponse servers = 1;
+}
+
+message DeleteServerRequest{
+  string id = 1;
+  string user_id = 2;
+}
+
+message DeleteServerResponse{
+  string id = 1;
 }
 
 message ServerMetricsRequest {

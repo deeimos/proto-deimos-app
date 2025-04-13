@@ -195,3 +195,39 @@ export namespace GetServersListResponse {
   }
 }
 
+export class DeleteServerRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): DeleteServerRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteServerRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteServerRequest): DeleteServerRequest.AsObject;
+  static serializeBinaryToWriter(message: DeleteServerRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteServerRequest;
+  static deserializeBinaryFromReader(message: DeleteServerRequest, reader: jspb.BinaryReader): DeleteServerRequest;
+}
+
+export namespace DeleteServerRequest {
+  export type AsObject = {
+    id: string,
+  }
+}
+
+export class DeleteServerResponse extends jspb.Message {
+  getId(): string;
+  setId(value: string): DeleteServerResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteServerResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteServerResponse): DeleteServerResponse.AsObject;
+  static serializeBinaryToWriter(message: DeleteServerResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteServerResponse;
+  static deserializeBinaryFromReader(message: DeleteServerResponse, reader: jspb.BinaryReader): DeleteServerResponse;
+}
+
+export namespace DeleteServerResponse {
+  export type AsObject = {
+    id: string,
+  }
+}
+

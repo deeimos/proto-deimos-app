@@ -23,6 +23,7 @@ const (
 	ServersAPI_UpdateServer_FullMethodName        = "/servers_api.ServersAPI/UpdateServer"
 	ServersAPI_GetServer_FullMethodName           = "/servers_api.ServersAPI/GetServer"
 	ServersAPI_GetServersList_FullMethodName      = "/servers_api.ServersAPI/GetServersList"
+	ServersAPI_DeleteServer_FullMethodName        = "/servers_api.ServersAPI/DeleteServer"
 	ServersAPI_StreamServerMetrics_FullMethodName = "/servers_api.ServersAPI/StreamServerMetrics"
 )
 
@@ -34,6 +35,7 @@ type ServersAPIClient interface {
 	UpdateServer(ctx context.Context, in *UpdateServerRequest, opts ...grpc.CallOption) (*UpdateServerResponse, error)
 	GetServer(ctx context.Context, in *GetServerRequest, opts ...grpc.CallOption) (*GetServerResponse, error)
 	GetServersList(ctx context.Context, in *GetServersListRequest, opts ...grpc.CallOption) (*GetServersListResponse, error)
+	DeleteServer(ctx context.Context, in *DeleteServerRequest, opts ...grpc.CallOption) (*DeleteServerResponse, error)
 	StreamServerMetrics(ctx context.Context, in *ServerMetricsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerMetric], error)
 }
 
@@ -85,6 +87,16 @@ func (c *serversAPIClient) GetServersList(ctx context.Context, in *GetServersLis
 	return out, nil
 }
 
+func (c *serversAPIClient) DeleteServer(ctx context.Context, in *DeleteServerRequest, opts ...grpc.CallOption) (*DeleteServerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteServerResponse)
+	err := c.cc.Invoke(ctx, ServersAPI_DeleteServer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *serversAPIClient) StreamServerMetrics(ctx context.Context, in *ServerMetricsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerMetric], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &ServersAPI_ServiceDesc.Streams[0], ServersAPI_StreamServerMetrics_FullMethodName, cOpts...)
@@ -112,6 +124,7 @@ type ServersAPIServer interface {
 	UpdateServer(context.Context, *UpdateServerRequest) (*UpdateServerResponse, error)
 	GetServer(context.Context, *GetServerRequest) (*GetServerResponse, error)
 	GetServersList(context.Context, *GetServersListRequest) (*GetServersListResponse, error)
+	DeleteServer(context.Context, *DeleteServerRequest) (*DeleteServerResponse, error)
 	StreamServerMetrics(*ServerMetricsRequest, grpc.ServerStreamingServer[ServerMetric]) error
 	mustEmbedUnimplementedServersAPIServer()
 }
@@ -134,6 +147,9 @@ func (UnimplementedServersAPIServer) GetServer(context.Context, *GetServerReques
 }
 func (UnimplementedServersAPIServer) GetServersList(context.Context, *GetServersListRequest) (*GetServersListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetServersList not implemented")
+}
+func (UnimplementedServersAPIServer) DeleteServer(context.Context, *DeleteServerRequest) (*DeleteServerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteServer not implemented")
 }
 func (UnimplementedServersAPIServer) StreamServerMetrics(*ServerMetricsRequest, grpc.ServerStreamingServer[ServerMetric]) error {
 	return status.Errorf(codes.Unimplemented, "method StreamServerMetrics not implemented")
@@ -231,6 +247,24 @@ func _ServersAPI_GetServersList_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServersAPI_DeleteServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteServerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServersAPIServer).DeleteServer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServersAPI_DeleteServer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServersAPIServer).DeleteServer(ctx, req.(*DeleteServerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ServersAPI_StreamServerMetrics_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ServerMetricsRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -264,6 +298,10 @@ var ServersAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetServersList",
 			Handler:    _ServersAPI_GetServersList_Handler,
+		},
+		{
+			MethodName: "DeleteServer",
+			Handler:    _ServersAPI_DeleteServer_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

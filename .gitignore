@@ -20,11 +20,6 @@ yarn-error.log*
 .idea/
 *.sw?
 
-*.pb.go
-*.pb.gw.go
-*.pb.ts
-*.js.map
-
 .env
 .env.local
 .env.*

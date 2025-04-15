@@ -7,9 +7,6 @@ export class PublicServerMetricsRequest extends jspb.Message {
   getServerId(): string;
   setServerId(value: string): PublicServerMetricsRequest;
 
-  getToken(): string;
-  setToken(value: string): PublicServerMetricsRequest;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PublicServerMetricsRequest.AsObject;
   static toObject(includeInstance: boolean, msg: PublicServerMetricsRequest): PublicServerMetricsRequest.AsObject;
@@ -21,7 +18,6 @@ export class PublicServerMetricsRequest extends jspb.Message {
 export namespace PublicServerMetricsRequest {
   export type AsObject = {
     serverId: string,
-    token: string,
   }
 }
 

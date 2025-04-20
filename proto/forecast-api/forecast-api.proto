@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package forecast_api;
+
+option go_package = "deimos.forecast_api.v1;forecast_api1";
+
+service ForecastService {
+  rpc GetForecast (ForecastRequest) returns (ForecastResponse) {};
+  rpc StreamForecastUpdates (ForecastStreamRequest) returns (stream ForecastPoint) {};
+}
+
+message ForecastRequest {
+  string server_id = 1;
+  int32 hours_ahead = 2;
+}
+
+message ForecastResponse {
+  string server_id = 1;
+  repeated ForecastPoint forecasts = 2;
+}
+
+message ForecastStreamRequest {
+  string server_id = 1;
+}
+
+message ForecastPoint {
+  google.protobuf.Timestamp timestamp = 1;
+  double cpu_load = 2;
+  double memory_load = 3;
+  double availability_probability = 4; 
+}

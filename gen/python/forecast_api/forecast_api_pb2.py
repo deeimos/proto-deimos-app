@@ -23,9 +23,10 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x66orecast-api/forecast-api.proto\x12\x0c\x66orecast_api\x1a\x1fgoogle/protobuf/timestamp.proto\"9\n\x0f\x46orecastRequest\x12\x11\n\tserver_id\x18\x01 \x01(\t\x12\x13\n\x0bhours_ahead\x18\x02 \x01(\x05\"U\n\x10\x46orecastResponse\x12\x11\n\tserver_id\x18\x01 \x01(\t\x12.\n\tforecasts\x18\x02 \x03(\x0b\x32\x1b.forecast_api.ForecastPoint\"*\n\x15\x46orecastStreamRequest\x12\x11\n\tserver_id\x18\x01 \x01(\t\"\x87\x01\n\rForecastPoint\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08\x63pu_load\x18\x02 \x01(\x01\x12\x13\n\x0bmemory_load\x18\x03 \x01(\x01\x12 \n\x18\x61vailability_probability\x18\x04 \x01(\x01\x32\xc0\x01\n\x0f\x46orecastService\x12N\n\x0bGetForecast\x12\x1d.forecast_api.ForecastRequest\x1a\x1e.forecast_api.ForecastResponse\"\x00\x12]\n\x15StreamForecastUpdates\x12#.forecast_api.ForecastStreamRequest\x1a\x1b.forecast_api.ForecastPoint\"\x00\x30\x01\x42&Z$deimos.forecast_api.v1;forecast_api1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x66orecast-api/forecast-api.proto\x12\x0c\x66orecast_api\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\"9\n\x0f\x46orecastRequest\x12\x11\n\tserver_id\x18\x01 \x01(\t\x12\x13\n\x0bhours_ahead\x18\x02 \x01(\x05\"U\n\x10\x46orecastResponse\x12\x11\n\tserver_id\x18\x01 \x01(\t\x12.\n\tforecasts\x18\x02 \x03(\x0b\x32\x1b.forecast_api.ForecastPoint\"*\n\x15\x46orecastStreamRequest\x12\x11\n\tserver_id\x18\x01 \x01(\t\"\x87\x01\n\rForecastPoint\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08\x63pu_load\x18\x02 \x01(\x01\x12\x13\n\x0bmemory_load\x18\x03 \x01(\x01\x12 \n\x18\x61vailability_probability\x18\x04 \x01(\x01\"%\n\x10\x41\x64\x64ServerRequest\x12\x11\n\tserver_id\x18\x01 \x01(\t\"(\n\x13RemoveServerRequest\x12\x11\n\tserver_id\x18\x01 \x01(\t\"(\n\x13UpdateServerRequest\x12\x11\n\tserver_id\x18\x01 \x01(\t2\xc4\x03\n\x0f\x46orecastService\x12N\n\x0bGetForecast\x12\x1d.forecast_api.ForecastRequest\x1a\x1e.forecast_api.ForecastResponse\"\x00\x12]\n\x15StreamForecastUpdates\x12#.forecast_api.ForecastStreamRequest\x1a\x1b.forecast_api.ForecastPoint\"\x00\x30\x01\x12P\n\x14\x41\x64\x64ServerToScheduler\x12\x1e.forecast_api.AddServerRequest\x1a\x16.google.protobuf.Empty\"\x00\x12X\n\x19RemoveServerFromScheduler\x12!.forecast_api.RemoveServerRequest\x1a\x16.google.protobuf.Empty\"\x00\x12V\n\x17UpdateServerInScheduler\x12!.forecast_api.UpdateServerRequest\x1a\x16.google.protobuf.Empty\"\x00\x42&Z$deimos.forecast_api.v1;forecast_api1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,14 +34,20 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'forecast_api.forecast_api_p
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z$deimos.forecast_api.v1;forecast_api1'
-  _globals['_FORECASTREQUEST']._serialized_start=82
-  _globals['_FORECASTREQUEST']._serialized_end=139
-  _globals['_FORECASTRESPONSE']._serialized_start=141
-  _globals['_FORECASTRESPONSE']._serialized_end=226
-  _globals['_FORECASTSTREAMREQUEST']._serialized_start=228
-  _globals['_FORECASTSTREAMREQUEST']._serialized_end=270
-  _globals['_FORECASTPOINT']._serialized_start=273
-  _globals['_FORECASTPOINT']._serialized_end=408
-  _globals['_FORECASTSERVICE']._serialized_start=411
-  _globals['_FORECASTSERVICE']._serialized_end=603
+  _globals['_FORECASTREQUEST']._serialized_start=111
+  _globals['_FORECASTREQUEST']._serialized_end=168
+  _globals['_FORECASTRESPONSE']._serialized_start=170
+  _globals['_FORECASTRESPONSE']._serialized_end=255
+  _globals['_FORECASTSTREAMREQUEST']._serialized_start=257
+  _globals['_FORECASTSTREAMREQUEST']._serialized_end=299
+  _globals['_FORECASTPOINT']._serialized_start=302
+  _globals['_FORECASTPOINT']._serialized_end=437
+  _globals['_ADDSERVERREQUEST']._serialized_start=439
+  _globals['_ADDSERVERREQUEST']._serialized_end=476
+  _globals['_REMOVESERVERREQUEST']._serialized_start=478
+  _globals['_REMOVESERVERREQUEST']._serialized_end=518
+  _globals['_UPDATESERVERREQUEST']._serialized_start=520
+  _globals['_UPDATESERVERREQUEST']._serialized_end=560
+  _globals['_FORECASTSERVICE']._serialized_start=563
+  _globals['_FORECASTSERVICE']._serialized_end=1015
 # @@protoc_insertion_point(module_scope)

@@ -4,6 +4,7 @@ import grpc
 import warnings
 
 from forecast_api import forecast_api_pb2 as forecast__api_dot_forecast__api__pb2
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
@@ -44,6 +45,21 @@ class ForecastServiceStub(object):
                 request_serializer=forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.SerializeToString,
                 response_deserializer=forecast__api_dot_forecast__api__pb2.ForecastPoint.FromString,
                 _registered_method=True)
+        self.AddServerToScheduler = channel.unary_unary(
+                '/forecast_api.ForecastService/AddServerToScheduler',
+                request_serializer=forecast__api_dot_forecast__api__pb2.AddServerRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+        self.RemoveServerFromScheduler = channel.unary_unary(
+                '/forecast_api.ForecastService/RemoveServerFromScheduler',
+                request_serializer=forecast__api_dot_forecast__api__pb2.RemoveServerRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+        self.UpdateServerInScheduler = channel.unary_unary(
+                '/forecast_api.ForecastService/UpdateServerInScheduler',
+                request_serializer=forecast__api_dot_forecast__api__pb2.UpdateServerRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
 
 
 class ForecastServiceServicer(object):
@@ -61,6 +77,25 @@ class ForecastServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def AddServerToScheduler(self, request, context):
+        """Управление расписанием
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RemoveServerFromScheduler(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateServerInScheduler(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ForecastServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +108,21 @@ def add_ForecastServiceServicer_to_server(servicer, server):
                     servicer.StreamForecastUpdates,
                     request_deserializer=forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.FromString,
                     response_serializer=forecast__api_dot_forecast__api__pb2.ForecastPoint.SerializeToString,
+            ),
+            'AddServerToScheduler': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddServerToScheduler,
+                    request_deserializer=forecast__api_dot_forecast__api__pb2.AddServerRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'RemoveServerFromScheduler': grpc.unary_unary_rpc_method_handler(
+                    servicer.RemoveServerFromScheduler,
+                    request_deserializer=forecast__api_dot_forecast__api__pb2.RemoveServerRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'UpdateServerInScheduler': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateServerInScheduler,
+                    request_deserializer=forecast__api_dot_forecast__api__pb2.UpdateServerRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,6 +179,87 @@ class ForecastService(object):
             '/forecast_api.ForecastService/StreamForecastUpdates',
             forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.SerializeToString,
             forecast__api_dot_forecast__api__pb2.ForecastPoint.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AddServerToScheduler(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/forecast_api.ForecastService/AddServerToScheduler',
+            forecast__api_dot_forecast__api__pb2.AddServerRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RemoveServerFromScheduler(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/forecast_api.ForecastService/RemoveServerFromScheduler',
+            forecast__api_dot_forecast__api__pb2.RemoveServerRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdateServerInScheduler(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/forecast_api.ForecastService/UpdateServerInScheduler',
+            forecast__api_dot_forecast__api__pb2.UpdateServerRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

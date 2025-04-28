@@ -172,6 +172,11 @@ export class PublicForecastPoint extends Message<PublicForecastPoint> {
    */
   availabilityProbability = 0;
 
+  /**
+   * @generated from field: string status = 10;
+   */
+  status = "";
+
   constructor(data?: PartialMessage<PublicForecastPoint>) {
     super();
     proto3.util.initPartial(data, this);
@@ -189,6 +194,7 @@ export class PublicForecastPoint extends Message<PublicForecastPoint> {
     { no: 7, name: "network_rx", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 8, name: "network_tx", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 9, name: "availability_probability", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 10, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PublicForecastPoint {

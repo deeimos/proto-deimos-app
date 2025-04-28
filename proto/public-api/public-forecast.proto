@@ -34,5 +34,6 @@ message PublicForecastRequest {
     double network_rx = 7;
     double network_tx = 8;
     double availability_probability = 9; 
+    string status = 10;
   }
   

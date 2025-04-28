@@ -32,7 +32,12 @@ message ForecastPoint {
   google.protobuf.Timestamp timestamp = 1;
   double cpu_load = 2;
   double memory_load = 3;
-  double availability_probability = 4; 
+  double disk_usage = 4;
+  double load_avg_1 = 5;
+  double load_avg_5 = 6;
+  double network_rx = 7;
+  double network_tx = 8;
+  double availability_probability = 9; 
 }
 
 message AddServerRequest {

@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -24,6 +23,7 @@ const (
 	ForecastAPI_StreamForecastUpdates_FullMethodName     = "/forecast_api.ForecastAPI/StreamForecastUpdates"
 	ForecastAPI_AddServerToScheduler_FullMethodName      = "/forecast_api.ForecastAPI/AddServerToScheduler"
 	ForecastAPI_RemoveServerFromScheduler_FullMethodName = "/forecast_api.ForecastAPI/RemoveServerFromScheduler"
+	ForecastAPI_RemoveModel_FullMethodName               = "/forecast_api.ForecastAPI/RemoveModel"
 )
 
 // ForecastAPIClient is the client API for ForecastAPI service.
@@ -32,8 +32,9 @@ const (
 type ForecastAPIClient interface {
 	GetForecast(ctx context.Context, in *ForecastRequest, opts ...grpc.CallOption) (*ForecastResponse, error)
 	StreamForecastUpdates(ctx context.Context, in *ForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ForecastPoint], error)
-	AddServerToScheduler(ctx context.Context, in *AddServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	RemoveServerFromScheduler(ctx context.Context, in *RemoveServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	AddServerToScheduler(ctx context.Context, in *AddServerRequest, opts ...grpc.CallOption) (*AddServerResponse, error)
+	RemoveServerFromScheduler(ctx context.Context, in *RemoveServerRequest, opts ...grpc.CallOption) (*RemoveServerResponse, error)
+	RemoveModel(ctx context.Context, in *RemoveModelRequest, opts ...grpc.CallOption) (*RemoveModelResponse, error)
 }
 
 type forecastAPIClient struct {
@@ -73,9 +74,9 @@ func (c *forecastAPIClient) StreamForecastUpdates(ctx context.Context, in *Forec
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ForecastAPI_StreamForecastUpdatesClient = grpc.ServerStreamingClient[ForecastPoint]
 
-func (c *forecastAPIClient) AddServerToScheduler(ctx context.Context, in *AddServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *forecastAPIClient) AddServerToScheduler(ctx context.Context, in *AddServerRequest, opts ...grpc.CallOption) (*AddServerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(AddServerResponse)
 	err := c.cc.Invoke(ctx, ForecastAPI_AddServerToScheduler_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -83,10 +84,20 @@ func (c *forecastAPIClient) AddServerToScheduler(ctx context.Context, in *AddSer
 	return out, nil
 }
 
-func (c *forecastAPIClient) RemoveServerFromScheduler(ctx context.Context, in *RemoveServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *forecastAPIClient) RemoveServerFromScheduler(ctx context.Context, in *RemoveServerRequest, opts ...grpc.CallOption) (*RemoveServerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(RemoveServerResponse)
 	err := c.cc.Invoke(ctx, ForecastAPI_RemoveServerFromScheduler_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *forecastAPIClient) RemoveModel(ctx context.Context, in *RemoveModelRequest, opts ...grpc.CallOption) (*RemoveModelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveModelResponse)
+	err := c.cc.Invoke(ctx, ForecastAPI_RemoveModel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,8 +110,9 @@ func (c *forecastAPIClient) RemoveServerFromScheduler(ctx context.Context, in *R
 type ForecastAPIServer interface {
 	GetForecast(context.Context, *ForecastRequest) (*ForecastResponse, error)
 	StreamForecastUpdates(*ForecastStreamRequest, grpc.ServerStreamingServer[ForecastPoint]) error
-	AddServerToScheduler(context.Context, *AddServerRequest) (*emptypb.Empty, error)
-	RemoveServerFromScheduler(context.Context, *RemoveServerRequest) (*emptypb.Empty, error)
+	AddServerToScheduler(context.Context, *AddServerRequest) (*AddServerResponse, error)
+	RemoveServerFromScheduler(context.Context, *RemoveServerRequest) (*RemoveServerResponse, error)
+	RemoveModel(context.Context, *RemoveModelRequest) (*RemoveModelResponse, error)
 	mustEmbedUnimplementedForecastAPIServer()
 }
 
@@ -117,11 +129,14 @@ func (UnimplementedForecastAPIServer) GetForecast(context.Context, *ForecastRequ
 func (UnimplementedForecastAPIServer) StreamForecastUpdates(*ForecastStreamRequest, grpc.ServerStreamingServer[ForecastPoint]) error {
 	return status.Errorf(codes.Unimplemented, "method StreamForecastUpdates not implemented")
 }
-func (UnimplementedForecastAPIServer) AddServerToScheduler(context.Context, *AddServerRequest) (*emptypb.Empty, error) {
+func (UnimplementedForecastAPIServer) AddServerToScheduler(context.Context, *AddServerRequest) (*AddServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddServerToScheduler not implemented")
 }
-func (UnimplementedForecastAPIServer) RemoveServerFromScheduler(context.Context, *RemoveServerRequest) (*emptypb.Empty, error) {
+func (UnimplementedForecastAPIServer) RemoveServerFromScheduler(context.Context, *RemoveServerRequest) (*RemoveServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveServerFromScheduler not implemented")
+}
+func (UnimplementedForecastAPIServer) RemoveModel(context.Context, *RemoveModelRequest) (*RemoveModelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveModel not implemented")
 }
 func (UnimplementedForecastAPIServer) mustEmbedUnimplementedForecastAPIServer() {}
 func (UnimplementedForecastAPIServer) testEmbeddedByValue()                     {}
@@ -209,6 +224,24 @@ func _ForecastAPI_RemoveServerFromScheduler_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ForecastAPI_RemoveModel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveModelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ForecastAPIServer).RemoveModel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ForecastAPI_RemoveModel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ForecastAPIServer).RemoveModel(ctx, req.(*RemoveModelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ForecastAPI_ServiceDesc is the grpc.ServiceDesc for ForecastAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -227,6 +260,10 @@ var ForecastAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveServerFromScheduler",
 			Handler:    _ForecastAPI_RemoveServerFromScheduler_Handler,
+		},
+		{
+			MethodName: "RemoveModel",
+			Handler:    _ForecastAPI_RemoveModel_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

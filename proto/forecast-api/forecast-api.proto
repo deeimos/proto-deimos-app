@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/empty.proto";
 
 package forecast_api;
 
@@ -10,8 +9,9 @@ option go_package = "deimos.forecast_api.v1;forecast_api1";
 service ForecastAPI {
   rpc GetForecast (ForecastRequest) returns (ForecastResponse) {};
   rpc StreamForecastUpdates (ForecastStreamRequest) returns (stream ForecastPoint) {};
-  rpc AddServerToScheduler(AddServerRequest) returns (google.protobuf.Empty) {};
-  rpc RemoveServerFromScheduler(RemoveServerRequest) returns (google.protobuf.Empty) {};
+  rpc AddServerToScheduler(AddServerRequest) returns (AddServerResponse) {};
+  rpc RemoveServerFromScheduler(RemoveServerRequest) returns (RemoveServerResponse) {};
+  rpc RemoveModel(RemoveModelRequest) returns (RemoveModelResponse) {};
 }
 
 message ForecastRequest {
@@ -44,6 +44,22 @@ message AddServerRequest {
   string server_id = 1;
 }
 
+message AddServerResponse {
+  string server_id = 1;
+}
+
 message RemoveServerRequest {
   string server_id = 1;
+}
+
+message RemoveServerResponse {
+  string server_id = 1;
+}
+
+message RemoveModelRequest {
+  string server_id = 1;
+}
+
+message RemoveModelResponse {
+  string model_id = 1;
 }

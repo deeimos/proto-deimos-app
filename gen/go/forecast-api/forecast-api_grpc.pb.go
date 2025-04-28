@@ -24,7 +24,6 @@ const (
 	ForecastService_StreamForecastUpdates_FullMethodName     = "/forecast_api.ForecastService/StreamForecastUpdates"
 	ForecastService_AddServerToScheduler_FullMethodName      = "/forecast_api.ForecastService/AddServerToScheduler"
 	ForecastService_RemoveServerFromScheduler_FullMethodName = "/forecast_api.ForecastService/RemoveServerFromScheduler"
-	ForecastService_UpdateServerInScheduler_FullMethodName   = "/forecast_api.ForecastService/UpdateServerInScheduler"
 )
 
 // ForecastServiceClient is the client API for ForecastService service.
@@ -33,10 +32,8 @@ const (
 type ForecastServiceClient interface {
 	GetForecast(ctx context.Context, in *ForecastRequest, opts ...grpc.CallOption) (*ForecastResponse, error)
 	StreamForecastUpdates(ctx context.Context, in *ForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ForecastPoint], error)
-	// Управление расписанием
 	AddServerToScheduler(ctx context.Context, in *AddServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RemoveServerFromScheduler(ctx context.Context, in *RemoveServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	UpdateServerInScheduler(ctx context.Context, in *UpdateServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type forecastServiceClient struct {
@@ -96,26 +93,14 @@ func (c *forecastServiceClient) RemoveServerFromScheduler(ctx context.Context, i
 	return out, nil
 }
 
-func (c *forecastServiceClient) UpdateServerInScheduler(ctx context.Context, in *UpdateServerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, ForecastService_UpdateServerInScheduler_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ForecastServiceServer is the server API for ForecastService service.
 // All implementations must embed UnimplementedForecastServiceServer
 // for forward compatibility.
 type ForecastServiceServer interface {
 	GetForecast(context.Context, *ForecastRequest) (*ForecastResponse, error)
 	StreamForecastUpdates(*ForecastStreamRequest, grpc.ServerStreamingServer[ForecastPoint]) error
-	// Управление расписанием
 	AddServerToScheduler(context.Context, *AddServerRequest) (*emptypb.Empty, error)
 	RemoveServerFromScheduler(context.Context, *RemoveServerRequest) (*emptypb.Empty, error)
-	UpdateServerInScheduler(context.Context, *UpdateServerRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedForecastServiceServer()
 }
 
@@ -137,9 +122,6 @@ func (UnimplementedForecastServiceServer) AddServerToScheduler(context.Context, 
 }
 func (UnimplementedForecastServiceServer) RemoveServerFromScheduler(context.Context, *RemoveServerRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveServerFromScheduler not implemented")
-}
-func (UnimplementedForecastServiceServer) UpdateServerInScheduler(context.Context, *UpdateServerRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateServerInScheduler not implemented")
 }
 func (UnimplementedForecastServiceServer) mustEmbedUnimplementedForecastServiceServer() {}
 func (UnimplementedForecastServiceServer) testEmbeddedByValue()                         {}
@@ -227,24 +209,6 @@ func _ForecastService_RemoveServerFromScheduler_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ForecastService_UpdateServerInScheduler_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateServerRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ForecastServiceServer).UpdateServerInScheduler(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ForecastService_UpdateServerInScheduler_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ForecastServiceServer).UpdateServerInScheduler(ctx, req.(*UpdateServerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // ForecastService_ServiceDesc is the grpc.ServiceDesc for ForecastService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -263,10 +227,6 @@ var ForecastService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveServerFromScheduler",
 			Handler:    _ForecastService_RemoveServerFromScheduler_Handler,
-		},
-		{
-			MethodName: "UpdateServerInScheduler",
-			Handler:    _ForecastService_UpdateServerInScheduler_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

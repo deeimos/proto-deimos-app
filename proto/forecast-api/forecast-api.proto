@@ -7,7 +7,7 @@ package forecast_api;
 
 option go_package = "deimos.forecast_api.v1;forecast_api1";
 
-service ForecastService {
+service ForecastAPI {
   rpc GetForecast (ForecastRequest) returns (ForecastResponse) {};
   rpc StreamForecastUpdates (ForecastStreamRequest) returns (stream ForecastPoint) {};
   rpc AddServerToScheduler(AddServerRequest) returns (google.protobuf.Empty) {};

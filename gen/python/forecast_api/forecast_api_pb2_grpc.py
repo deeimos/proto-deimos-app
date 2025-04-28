@@ -26,7 +26,7 @@ if _version_not_supported:
     )
 
 
-class ForecastServiceStub(object):
+class ForecastAPIStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -36,28 +36,28 @@ class ForecastServiceStub(object):
             channel: A grpc.Channel.
         """
         self.GetForecast = channel.unary_unary(
-                '/forecast_api.ForecastService/GetForecast',
+                '/forecast_api.ForecastAPI/GetForecast',
                 request_serializer=forecast__api_dot_forecast__api__pb2.ForecastRequest.SerializeToString,
                 response_deserializer=forecast__api_dot_forecast__api__pb2.ForecastResponse.FromString,
                 _registered_method=True)
         self.StreamForecastUpdates = channel.unary_stream(
-                '/forecast_api.ForecastService/StreamForecastUpdates',
+                '/forecast_api.ForecastAPI/StreamForecastUpdates',
                 request_serializer=forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.SerializeToString,
                 response_deserializer=forecast__api_dot_forecast__api__pb2.ForecastPoint.FromString,
                 _registered_method=True)
         self.AddServerToScheduler = channel.unary_unary(
-                '/forecast_api.ForecastService/AddServerToScheduler',
+                '/forecast_api.ForecastAPI/AddServerToScheduler',
                 request_serializer=forecast__api_dot_forecast__api__pb2.AddServerRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
         self.RemoveServerFromScheduler = channel.unary_unary(
-                '/forecast_api.ForecastService/RemoveServerFromScheduler',
+                '/forecast_api.ForecastAPI/RemoveServerFromScheduler',
                 request_serializer=forecast__api_dot_forecast__api__pb2.RemoveServerRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
 
 
-class ForecastServiceServicer(object):
+class ForecastAPIServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetForecast(self, request, context):
@@ -85,7 +85,7 @@ class ForecastServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ForecastServiceServicer_to_server(servicer, server):
+def add_ForecastAPIServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetForecast': grpc.unary_unary_rpc_method_handler(
                     servicer.GetForecast,
@@ -109,13 +109,13 @@ def add_ForecastServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'forecast_api.ForecastService', rpc_method_handlers)
+            'forecast_api.ForecastAPI', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('forecast_api.ForecastService', rpc_method_handlers)
+    server.add_registered_method_handlers('forecast_api.ForecastAPI', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class ForecastService(object):
+class ForecastAPI(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -132,7 +132,7 @@ class ForecastService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/forecast_api.ForecastService/GetForecast',
+            '/forecast_api.ForecastAPI/GetForecast',
             forecast__api_dot_forecast__api__pb2.ForecastRequest.SerializeToString,
             forecast__api_dot_forecast__api__pb2.ForecastResponse.FromString,
             options,
@@ -159,7 +159,7 @@ class ForecastService(object):
         return grpc.experimental.unary_stream(
             request,
             target,
-            '/forecast_api.ForecastService/StreamForecastUpdates',
+            '/forecast_api.ForecastAPI/StreamForecastUpdates',
             forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.SerializeToString,
             forecast__api_dot_forecast__api__pb2.ForecastPoint.FromString,
             options,
@@ -186,7 +186,7 @@ class ForecastService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/forecast_api.ForecastService/AddServerToScheduler',
+            '/forecast_api.ForecastAPI/AddServerToScheduler',
             forecast__api_dot_forecast__api__pb2.AddServerRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
@@ -213,7 +213,7 @@ class ForecastService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/forecast_api.ForecastService/RemoveServerFromScheduler',
+            '/forecast_api.ForecastAPI/RemoveServerFromScheduler',
             forecast__api_dot_forecast__api__pb2.RemoveServerRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,

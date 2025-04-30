@@ -1,8 +1,0 @@
-version: v1
-plugins:
-  - name: connect-es
-    out: gen/connect
-    opt: target=js+dts
-  - name: es
-    out: gen/connect
-    opt: target=js+dts

@@ -13,8 +13,8 @@ service ServersAPI {
   rpc GetServersList(GetServersListRequest) returns (GetServersListResponse) {};
   rpc DeleteServer (DeleteServerRequest) returns (DeleteServerResponse) {};
   rpc StreamServerMetrics(ServerMetricsRequest) returns (stream ServerMetric) {};
-  rpc GetForecast (ServerForecastRequest) returns (ServerForecastResponse) {};
-  rpc StreamForecastUpdates (ServerForecastStreamRequest) returns (stream ServerForecastPoint) {};
+  rpc ServerForecast (ServerForecastRequest) returns (ServerForecastResponse) {};
+  rpc StreamServerForecast(ServerForecastStreamRequest) returns (stream ServerForecastPoint) {};
 }
 
 message CreateServerRequest {

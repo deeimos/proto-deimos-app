@@ -34,13 +34,13 @@ class ForecastAPIStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetForecast = channel.unary_unary(
-                '/forecast_api.ForecastAPI/GetForecast',
+        self.Forecast = channel.unary_unary(
+                '/forecast_api.ForecastAPI/Forecast',
                 request_serializer=forecast__api_dot_forecast__api__pb2.ForecastRequest.SerializeToString,
                 response_deserializer=forecast__api_dot_forecast__api__pb2.ForecastResponse.FromString,
                 _registered_method=True)
-        self.StreamForecastUpdates = channel.unary_stream(
-                '/forecast_api.ForecastAPI/StreamForecastUpdates',
+        self.StreamForecast = channel.unary_stream(
+                '/forecast_api.ForecastAPI/StreamForecast',
                 request_serializer=forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.SerializeToString,
                 response_deserializer=forecast__api_dot_forecast__api__pb2.ForecastPoint.FromString,
                 _registered_method=True)
@@ -64,13 +64,13 @@ class ForecastAPIStub(object):
 class ForecastAPIServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetForecast(self, request, context):
+    def Forecast(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def StreamForecastUpdates(self, request, context):
+    def StreamForecast(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -97,13 +97,13 @@ class ForecastAPIServicer(object):
 
 def add_ForecastAPIServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetForecast': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetForecast,
+            'Forecast': grpc.unary_unary_rpc_method_handler(
+                    servicer.Forecast,
                     request_deserializer=forecast__api_dot_forecast__api__pb2.ForecastRequest.FromString,
                     response_serializer=forecast__api_dot_forecast__api__pb2.ForecastResponse.SerializeToString,
             ),
-            'StreamForecastUpdates': grpc.unary_stream_rpc_method_handler(
-                    servicer.StreamForecastUpdates,
+            'StreamForecast': grpc.unary_stream_rpc_method_handler(
+                    servicer.StreamForecast,
                     request_deserializer=forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.FromString,
                     response_serializer=forecast__api_dot_forecast__api__pb2.ForecastPoint.SerializeToString,
             ),
@@ -134,7 +134,7 @@ class ForecastAPI(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetForecast(request,
+    def Forecast(request,
             target,
             options=(),
             channel_credentials=None,
@@ -147,7 +147,7 @@ class ForecastAPI(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/forecast_api.ForecastAPI/GetForecast',
+            '/forecast_api.ForecastAPI/Forecast',
             forecast__api_dot_forecast__api__pb2.ForecastRequest.SerializeToString,
             forecast__api_dot_forecast__api__pb2.ForecastResponse.FromString,
             options,
@@ -161,7 +161,7 @@ class ForecastAPI(object):
             _registered_method=True)
 
     @staticmethod
-    def StreamForecastUpdates(request,
+    def StreamForecast(request,
             target,
             options=(),
             channel_credentials=None,
@@ -174,7 +174,7 @@ class ForecastAPI(object):
         return grpc.experimental.unary_stream(
             request,
             target,
-            '/forecast_api.ForecastAPI/StreamForecastUpdates',
+            '/forecast_api.ForecastAPI/StreamForecast',
             forecast__api_dot_forecast__api__pb2.ForecastStreamRequest.SerializeToString,
             forecast__api_dot_forecast__api__pb2.ForecastPoint.FromString,
             options,

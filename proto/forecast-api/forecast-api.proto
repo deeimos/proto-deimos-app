@@ -7,8 +7,8 @@ package forecast_api;
 option go_package = "deimos.forecast_api.v1;forecast_api1";
 
 service ForecastAPI {
-  rpc GetForecast (ForecastRequest) returns (ForecastResponse) {};
-  rpc StreamForecastUpdates (ForecastStreamRequest) returns (stream ForecastPoint) {};
+  rpc Forecast (ForecastRequest) returns (ForecastResponse) {};
+  rpc StreamForecast (ForecastStreamRequest) returns (stream ForecastPoint) {};
   rpc AddServerToScheduler(AddServerRequest) returns (AddServerResponse) {};
   rpc RemoveServerFromScheduler(RemoveServerRequest) returns (RemoveServerResponse) {};
   rpc RemoveModel(RemoveModelRequest) returns (RemoveModelResponse) {};

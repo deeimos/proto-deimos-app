@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PublicForecast_GetForecast_FullMethodName           = "/public_api.PublicForecast/GetForecast"
-	PublicForecast_StreamForecastUpdates_FullMethodName = "/public_api.PublicForecast/StreamForecastUpdates"
+	PublicForecast_ServerForecast_FullMethodName       = "/public_api.PublicForecast/ServerForecast"
+	PublicForecast_StreamServerForecast_FullMethodName = "/public_api.PublicForecast/StreamServerForecast"
 )
 
 // PublicForecastClient is the client API for PublicForecast service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PublicForecastClient interface {
-	GetForecast(ctx context.Context, in *PublicForecastRequest, opts ...grpc.CallOption) (*PublicForecastResponse, error)
-	StreamForecastUpdates(ctx context.Context, in *PublicForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PublicForecastPoint], error)
+	ServerForecast(ctx context.Context, in *PublicForecastRequest, opts ...grpc.CallOption) (*PublicForecastResponse, error)
+	StreamServerForecast(ctx context.Context, in *PublicForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PublicForecastPoint], error)
 }
 
 type publicForecastClient struct {
@@ -39,19 +39,19 @@ func NewPublicForecastClient(cc grpc.ClientConnInterface) PublicForecastClient {
 	return &publicForecastClient{cc}
 }
 
-func (c *publicForecastClient) GetForecast(ctx context.Context, in *PublicForecastRequest, opts ...grpc.CallOption) (*PublicForecastResponse, error) {
+func (c *publicForecastClient) ServerForecast(ctx context.Context, in *PublicForecastRequest, opts ...grpc.CallOption) (*PublicForecastResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PublicForecastResponse)
-	err := c.cc.Invoke(ctx, PublicForecast_GetForecast_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PublicForecast_ServerForecast_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *publicForecastClient) StreamForecastUpdates(ctx context.Context, in *PublicForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PublicForecastPoint], error) {
+func (c *publicForecastClient) StreamServerForecast(ctx context.Context, in *PublicForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PublicForecastPoint], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &PublicForecast_ServiceDesc.Streams[0], PublicForecast_StreamForecastUpdates_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &PublicForecast_ServiceDesc.Streams[0], PublicForecast_StreamServerForecast_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,14 +66,14 @@ func (c *publicForecastClient) StreamForecastUpdates(ctx context.Context, in *Pu
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type PublicForecast_StreamForecastUpdatesClient = grpc.ServerStreamingClient[PublicForecastPoint]
+type PublicForecast_StreamServerForecastClient = grpc.ServerStreamingClient[PublicForecastPoint]
 
 // PublicForecastServer is the server API for PublicForecast service.
 // All implementations must embed UnimplementedPublicForecastServer
 // for forward compatibility.
 type PublicForecastServer interface {
-	GetForecast(context.Context, *PublicForecastRequest) (*PublicForecastResponse, error)
-	StreamForecastUpdates(*PublicForecastStreamRequest, grpc.ServerStreamingServer[PublicForecastPoint]) error
+	ServerForecast(context.Context, *PublicForecastRequest) (*PublicForecastResponse, error)
+	StreamServerForecast(*PublicForecastStreamRequest, grpc.ServerStreamingServer[PublicForecastPoint]) error
 	mustEmbedUnimplementedPublicForecastServer()
 }
 
@@ -84,11 +84,11 @@ type PublicForecastServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPublicForecastServer struct{}
 
-func (UnimplementedPublicForecastServer) GetForecast(context.Context, *PublicForecastRequest) (*PublicForecastResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetForecast not implemented")
+func (UnimplementedPublicForecastServer) ServerForecast(context.Context, *PublicForecastRequest) (*PublicForecastResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ServerForecast not implemented")
 }
-func (UnimplementedPublicForecastServer) StreamForecastUpdates(*PublicForecastStreamRequest, grpc.ServerStreamingServer[PublicForecastPoint]) error {
-	return status.Errorf(codes.Unimplemented, "method StreamForecastUpdates not implemented")
+func (UnimplementedPublicForecastServer) StreamServerForecast(*PublicForecastStreamRequest, grpc.ServerStreamingServer[PublicForecastPoint]) error {
+	return status.Errorf(codes.Unimplemented, "method StreamServerForecast not implemented")
 }
 func (UnimplementedPublicForecastServer) mustEmbedUnimplementedPublicForecastServer() {}
 func (UnimplementedPublicForecastServer) testEmbeddedByValue()                        {}
@@ -111,34 +111,34 @@ func RegisterPublicForecastServer(s grpc.ServiceRegistrar, srv PublicForecastSer
 	s.RegisterService(&PublicForecast_ServiceDesc, srv)
 }
 
-func _PublicForecast_GetForecast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PublicForecast_ServerForecast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PublicForecastRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PublicForecastServer).GetForecast(ctx, in)
+		return srv.(PublicForecastServer).ServerForecast(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PublicForecast_GetForecast_FullMethodName,
+		FullMethod: PublicForecast_ServerForecast_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PublicForecastServer).GetForecast(ctx, req.(*PublicForecastRequest))
+		return srv.(PublicForecastServer).ServerForecast(ctx, req.(*PublicForecastRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PublicForecast_StreamForecastUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _PublicForecast_StreamServerForecast_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(PublicForecastStreamRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(PublicForecastServer).StreamForecastUpdates(m, &grpc.GenericServerStream[PublicForecastStreamRequest, PublicForecastPoint]{ServerStream: stream})
+	return srv.(PublicForecastServer).StreamServerForecast(m, &grpc.GenericServerStream[PublicForecastStreamRequest, PublicForecastPoint]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type PublicForecast_StreamForecastUpdatesServer = grpc.ServerStreamingServer[PublicForecastPoint]
+type PublicForecast_StreamServerForecastServer = grpc.ServerStreamingServer[PublicForecastPoint]
 
 // PublicForecast_ServiceDesc is the grpc.ServiceDesc for PublicForecast service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -148,14 +148,14 @@ var PublicForecast_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PublicForecastServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetForecast",
-			Handler:    _PublicForecast_GetForecast_Handler,
+			MethodName: "ServerForecast",
+			Handler:    _PublicForecast_ServerForecast_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "StreamForecastUpdates",
-			Handler:       _PublicForecast_StreamForecastUpdates_Handler,
+			StreamName:    "StreamServerForecast",
+			Handler:       _PublicForecast_StreamServerForecast_Handler,
 			ServerStreams: true,
 		},
 	},

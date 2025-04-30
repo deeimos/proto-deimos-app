@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ServersAPI_CreateServer_FullMethodName          = "/servers_api.ServersAPI/CreateServer"
-	ServersAPI_UpdateServer_FullMethodName          = "/servers_api.ServersAPI/UpdateServer"
-	ServersAPI_GetServer_FullMethodName             = "/servers_api.ServersAPI/GetServer"
-	ServersAPI_GetServersList_FullMethodName        = "/servers_api.ServersAPI/GetServersList"
-	ServersAPI_DeleteServer_FullMethodName          = "/servers_api.ServersAPI/DeleteServer"
-	ServersAPI_StreamServerMetrics_FullMethodName   = "/servers_api.ServersAPI/StreamServerMetrics"
-	ServersAPI_GetForecast_FullMethodName           = "/servers_api.ServersAPI/GetForecast"
-	ServersAPI_StreamForecastUpdates_FullMethodName = "/servers_api.ServersAPI/StreamForecastUpdates"
+	ServersAPI_CreateServer_FullMethodName         = "/servers_api.ServersAPI/CreateServer"
+	ServersAPI_UpdateServer_FullMethodName         = "/servers_api.ServersAPI/UpdateServer"
+	ServersAPI_GetServer_FullMethodName            = "/servers_api.ServersAPI/GetServer"
+	ServersAPI_GetServersList_FullMethodName       = "/servers_api.ServersAPI/GetServersList"
+	ServersAPI_DeleteServer_FullMethodName         = "/servers_api.ServersAPI/DeleteServer"
+	ServersAPI_StreamServerMetrics_FullMethodName  = "/servers_api.ServersAPI/StreamServerMetrics"
+	ServersAPI_ServerForecast_FullMethodName       = "/servers_api.ServersAPI/ServerForecast"
+	ServersAPI_StreamServerForecast_FullMethodName = "/servers_api.ServersAPI/StreamServerForecast"
 )
 
 // ServersAPIClient is the client API for ServersAPI service.
@@ -39,8 +39,8 @@ type ServersAPIClient interface {
 	GetServersList(ctx context.Context, in *GetServersListRequest, opts ...grpc.CallOption) (*GetServersListResponse, error)
 	DeleteServer(ctx context.Context, in *DeleteServerRequest, opts ...grpc.CallOption) (*DeleteServerResponse, error)
 	StreamServerMetrics(ctx context.Context, in *ServerMetricsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerMetric], error)
-	GetForecast(ctx context.Context, in *ServerForecastRequest, opts ...grpc.CallOption) (*ServerForecastResponse, error)
-	StreamForecastUpdates(ctx context.Context, in *ServerForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerForecastPoint], error)
+	ServerForecast(ctx context.Context, in *ServerForecastRequest, opts ...grpc.CallOption) (*ServerForecastResponse, error)
+	StreamServerForecast(ctx context.Context, in *ServerForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerForecastPoint], error)
 }
 
 type serversAPIClient struct {
@@ -120,19 +120,19 @@ func (c *serversAPIClient) StreamServerMetrics(ctx context.Context, in *ServerMe
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ServersAPI_StreamServerMetricsClient = grpc.ServerStreamingClient[ServerMetric]
 
-func (c *serversAPIClient) GetForecast(ctx context.Context, in *ServerForecastRequest, opts ...grpc.CallOption) (*ServerForecastResponse, error) {
+func (c *serversAPIClient) ServerForecast(ctx context.Context, in *ServerForecastRequest, opts ...grpc.CallOption) (*ServerForecastResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ServerForecastResponse)
-	err := c.cc.Invoke(ctx, ServersAPI_GetForecast_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ServersAPI_ServerForecast_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serversAPIClient) StreamForecastUpdates(ctx context.Context, in *ServerForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerForecastPoint], error) {
+func (c *serversAPIClient) StreamServerForecast(ctx context.Context, in *ServerForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ServerForecastPoint], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &ServersAPI_ServiceDesc.Streams[1], ServersAPI_StreamForecastUpdates_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &ServersAPI_ServiceDesc.Streams[1], ServersAPI_StreamServerForecast_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func (c *serversAPIClient) StreamForecastUpdates(ctx context.Context, in *Server
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ServersAPI_StreamForecastUpdatesClient = grpc.ServerStreamingClient[ServerForecastPoint]
+type ServersAPI_StreamServerForecastClient = grpc.ServerStreamingClient[ServerForecastPoint]
 
 // ServersAPIServer is the server API for ServersAPI service.
 // All implementations must embed UnimplementedServersAPIServer
@@ -159,8 +159,8 @@ type ServersAPIServer interface {
 	GetServersList(context.Context, *GetServersListRequest) (*GetServersListResponse, error)
 	DeleteServer(context.Context, *DeleteServerRequest) (*DeleteServerResponse, error)
 	StreamServerMetrics(*ServerMetricsRequest, grpc.ServerStreamingServer[ServerMetric]) error
-	GetForecast(context.Context, *ServerForecastRequest) (*ServerForecastResponse, error)
-	StreamForecastUpdates(*ServerForecastStreamRequest, grpc.ServerStreamingServer[ServerForecastPoint]) error
+	ServerForecast(context.Context, *ServerForecastRequest) (*ServerForecastResponse, error)
+	StreamServerForecast(*ServerForecastStreamRequest, grpc.ServerStreamingServer[ServerForecastPoint]) error
 	mustEmbedUnimplementedServersAPIServer()
 }
 
@@ -189,11 +189,11 @@ func (UnimplementedServersAPIServer) DeleteServer(context.Context, *DeleteServer
 func (UnimplementedServersAPIServer) StreamServerMetrics(*ServerMetricsRequest, grpc.ServerStreamingServer[ServerMetric]) error {
 	return status.Errorf(codes.Unimplemented, "method StreamServerMetrics not implemented")
 }
-func (UnimplementedServersAPIServer) GetForecast(context.Context, *ServerForecastRequest) (*ServerForecastResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetForecast not implemented")
+func (UnimplementedServersAPIServer) ServerForecast(context.Context, *ServerForecastRequest) (*ServerForecastResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ServerForecast not implemented")
 }
-func (UnimplementedServersAPIServer) StreamForecastUpdates(*ServerForecastStreamRequest, grpc.ServerStreamingServer[ServerForecastPoint]) error {
-	return status.Errorf(codes.Unimplemented, "method StreamForecastUpdates not implemented")
+func (UnimplementedServersAPIServer) StreamServerForecast(*ServerForecastStreamRequest, grpc.ServerStreamingServer[ServerForecastPoint]) error {
+	return status.Errorf(codes.Unimplemented, "method StreamServerForecast not implemented")
 }
 func (UnimplementedServersAPIServer) mustEmbedUnimplementedServersAPIServer() {}
 func (UnimplementedServersAPIServer) testEmbeddedByValue()                    {}
@@ -317,34 +317,34 @@ func _ServersAPI_StreamServerMetrics_Handler(srv interface{}, stream grpc.Server
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ServersAPI_StreamServerMetricsServer = grpc.ServerStreamingServer[ServerMetric]
 
-func _ServersAPI_GetForecast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ServersAPI_ServerForecast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ServerForecastRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServersAPIServer).GetForecast(ctx, in)
+		return srv.(ServersAPIServer).ServerForecast(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ServersAPI_GetForecast_FullMethodName,
+		FullMethod: ServersAPI_ServerForecast_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServersAPIServer).GetForecast(ctx, req.(*ServerForecastRequest))
+		return srv.(ServersAPIServer).ServerForecast(ctx, req.(*ServerForecastRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ServersAPI_StreamForecastUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _ServersAPI_StreamServerForecast_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ServerForecastStreamRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ServersAPIServer).StreamForecastUpdates(m, &grpc.GenericServerStream[ServerForecastStreamRequest, ServerForecastPoint]{ServerStream: stream})
+	return srv.(ServersAPIServer).StreamServerForecast(m, &grpc.GenericServerStream[ServerForecastStreamRequest, ServerForecastPoint]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ServersAPI_StreamForecastUpdatesServer = grpc.ServerStreamingServer[ServerForecastPoint]
+type ServersAPI_StreamServerForecastServer = grpc.ServerStreamingServer[ServerForecastPoint]
 
 // ServersAPI_ServiceDesc is the grpc.ServiceDesc for ServersAPI service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -374,8 +374,8 @@ var ServersAPI_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ServersAPI_DeleteServer_Handler,
 		},
 		{
-			MethodName: "GetForecast",
-			Handler:    _ServersAPI_GetForecast_Handler,
+			MethodName: "ServerForecast",
+			Handler:    _ServersAPI_ServerForecast_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -385,8 +385,8 @@ var ServersAPI_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "StreamForecastUpdates",
-			Handler:       _ServersAPI_StreamForecastUpdates_Handler,
+			StreamName:    "StreamServerForecast",
+			Handler:       _ServersAPI_StreamServerForecast_Handler,
 			ServerStreams: true,
 		},
 	},

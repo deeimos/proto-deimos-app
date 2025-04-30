@@ -7,8 +7,8 @@ package public_api;
 option go_package = "deimos.public_api.v1;public_apiv1";
 
 service PublicForecast {
-    rpc GetForecast (PublicForecastRequest) returns (PublicForecastResponse) {};
-    rpc StreamForecastUpdates (PublicForecastStreamRequest) returns (stream PublicForecastPoint) {};
+    rpc ServerForecast (PublicForecastRequest) returns (PublicForecastResponse) {};
+    rpc StreamServerForecast (PublicForecastStreamRequest) returns (stream PublicForecastPoint) {};
 }
 
 message PublicForecastRequest {

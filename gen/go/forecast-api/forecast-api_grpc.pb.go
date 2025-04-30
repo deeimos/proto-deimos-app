@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ForecastAPI_GetForecast_FullMethodName               = "/forecast_api.ForecastAPI/GetForecast"
-	ForecastAPI_StreamForecastUpdates_FullMethodName     = "/forecast_api.ForecastAPI/StreamForecastUpdates"
+	ForecastAPI_Forecast_FullMethodName                  = "/forecast_api.ForecastAPI/Forecast"
+	ForecastAPI_StreamForecast_FullMethodName            = "/forecast_api.ForecastAPI/StreamForecast"
 	ForecastAPI_AddServerToScheduler_FullMethodName      = "/forecast_api.ForecastAPI/AddServerToScheduler"
 	ForecastAPI_RemoveServerFromScheduler_FullMethodName = "/forecast_api.ForecastAPI/RemoveServerFromScheduler"
 	ForecastAPI_RemoveModel_FullMethodName               = "/forecast_api.ForecastAPI/RemoveModel"
@@ -30,8 +30,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ForecastAPIClient interface {
-	GetForecast(ctx context.Context, in *ForecastRequest, opts ...grpc.CallOption) (*ForecastResponse, error)
-	StreamForecastUpdates(ctx context.Context, in *ForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ForecastPoint], error)
+	Forecast(ctx context.Context, in *ForecastRequest, opts ...grpc.CallOption) (*ForecastResponse, error)
+	StreamForecast(ctx context.Context, in *ForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ForecastPoint], error)
 	AddServerToScheduler(ctx context.Context, in *AddServerRequest, opts ...grpc.CallOption) (*AddServerResponse, error)
 	RemoveServerFromScheduler(ctx context.Context, in *RemoveServerRequest, opts ...grpc.CallOption) (*RemoveServerResponse, error)
 	RemoveModel(ctx context.Context, in *RemoveModelRequest, opts ...grpc.CallOption) (*RemoveModelResponse, error)
@@ -45,19 +45,19 @@ func NewForecastAPIClient(cc grpc.ClientConnInterface) ForecastAPIClient {
 	return &forecastAPIClient{cc}
 }
 
-func (c *forecastAPIClient) GetForecast(ctx context.Context, in *ForecastRequest, opts ...grpc.CallOption) (*ForecastResponse, error) {
+func (c *forecastAPIClient) Forecast(ctx context.Context, in *ForecastRequest, opts ...grpc.CallOption) (*ForecastResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ForecastResponse)
-	err := c.cc.Invoke(ctx, ForecastAPI_GetForecast_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ForecastAPI_Forecast_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *forecastAPIClient) StreamForecastUpdates(ctx context.Context, in *ForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ForecastPoint], error) {
+func (c *forecastAPIClient) StreamForecast(ctx context.Context, in *ForecastStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ForecastPoint], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &ForecastAPI_ServiceDesc.Streams[0], ForecastAPI_StreamForecastUpdates_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &ForecastAPI_ServiceDesc.Streams[0], ForecastAPI_StreamForecast_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (c *forecastAPIClient) StreamForecastUpdates(ctx context.Context, in *Forec
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ForecastAPI_StreamForecastUpdatesClient = grpc.ServerStreamingClient[ForecastPoint]
+type ForecastAPI_StreamForecastClient = grpc.ServerStreamingClient[ForecastPoint]
 
 func (c *forecastAPIClient) AddServerToScheduler(ctx context.Context, in *AddServerRequest, opts ...grpc.CallOption) (*AddServerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -108,8 +108,8 @@ func (c *forecastAPIClient) RemoveModel(ctx context.Context, in *RemoveModelRequ
 // All implementations must embed UnimplementedForecastAPIServer
 // for forward compatibility.
 type ForecastAPIServer interface {
-	GetForecast(context.Context, *ForecastRequest) (*ForecastResponse, error)
-	StreamForecastUpdates(*ForecastStreamRequest, grpc.ServerStreamingServer[ForecastPoint]) error
+	Forecast(context.Context, *ForecastRequest) (*ForecastResponse, error)
+	StreamForecast(*ForecastStreamRequest, grpc.ServerStreamingServer[ForecastPoint]) error
 	AddServerToScheduler(context.Context, *AddServerRequest) (*AddServerResponse, error)
 	RemoveServerFromScheduler(context.Context, *RemoveServerRequest) (*RemoveServerResponse, error)
 	RemoveModel(context.Context, *RemoveModelRequest) (*RemoveModelResponse, error)
@@ -123,11 +123,11 @@ type ForecastAPIServer interface {
 // pointer dereference when methods are called.
 type UnimplementedForecastAPIServer struct{}
 
-func (UnimplementedForecastAPIServer) GetForecast(context.Context, *ForecastRequest) (*ForecastResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetForecast not implemented")
+func (UnimplementedForecastAPIServer) Forecast(context.Context, *ForecastRequest) (*ForecastResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Forecast not implemented")
 }
-func (UnimplementedForecastAPIServer) StreamForecastUpdates(*ForecastStreamRequest, grpc.ServerStreamingServer[ForecastPoint]) error {
-	return status.Errorf(codes.Unimplemented, "method StreamForecastUpdates not implemented")
+func (UnimplementedForecastAPIServer) StreamForecast(*ForecastStreamRequest, grpc.ServerStreamingServer[ForecastPoint]) error {
+	return status.Errorf(codes.Unimplemented, "method StreamForecast not implemented")
 }
 func (UnimplementedForecastAPIServer) AddServerToScheduler(context.Context, *AddServerRequest) (*AddServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddServerToScheduler not implemented")
@@ -159,34 +159,34 @@ func RegisterForecastAPIServer(s grpc.ServiceRegistrar, srv ForecastAPIServer) {
 	s.RegisterService(&ForecastAPI_ServiceDesc, srv)
 }
 
-func _ForecastAPI_GetForecast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ForecastAPI_Forecast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ForecastRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ForecastAPIServer).GetForecast(ctx, in)
+		return srv.(ForecastAPIServer).Forecast(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ForecastAPI_GetForecast_FullMethodName,
+		FullMethod: ForecastAPI_Forecast_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ForecastAPIServer).GetForecast(ctx, req.(*ForecastRequest))
+		return srv.(ForecastAPIServer).Forecast(ctx, req.(*ForecastRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ForecastAPI_StreamForecastUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _ForecastAPI_StreamForecast_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ForecastStreamRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ForecastAPIServer).StreamForecastUpdates(m, &grpc.GenericServerStream[ForecastStreamRequest, ForecastPoint]{ServerStream: stream})
+	return srv.(ForecastAPIServer).StreamForecast(m, &grpc.GenericServerStream[ForecastStreamRequest, ForecastPoint]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ForecastAPI_StreamForecastUpdatesServer = grpc.ServerStreamingServer[ForecastPoint]
+type ForecastAPI_StreamForecastServer = grpc.ServerStreamingServer[ForecastPoint]
 
 func _ForecastAPI_AddServerToScheduler_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddServerRequest)
@@ -250,8 +250,8 @@ var ForecastAPI_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ForecastAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetForecast",
-			Handler:    _ForecastAPI_GetForecast_Handler,
+			MethodName: "Forecast",
+			Handler:    _ForecastAPI_Forecast_Handler,
 		},
 		{
 			MethodName: "AddServerToScheduler",
@@ -268,8 +268,8 @@ var ForecastAPI_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "StreamForecastUpdates",
-			Handler:       _ForecastAPI_StreamForecastUpdates_Handler,
+			StreamName:    "StreamForecast",
+			Handler:       _ForecastAPI_StreamForecast_Handler,
 			ServerStreams: true,
 		},
 	},

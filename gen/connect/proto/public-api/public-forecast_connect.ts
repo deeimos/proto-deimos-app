@@ -13,19 +13,19 @@ export const PublicForecast = {
   typeName: "public_api.PublicForecast",
   methods: {
     /**
-     * @generated from rpc public_api.PublicForecast.GetForecast
+     * @generated from rpc public_api.PublicForecast.ServerForecast
      */
-    getForecast: {
-      name: "GetForecast",
+    serverForecast: {
+      name: "ServerForecast",
       I: PublicForecastRequest,
       O: PublicForecastResponse,
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc public_api.PublicForecast.StreamForecastUpdates
+     * @generated from rpc public_api.PublicForecast.StreamServerForecast
      */
-    streamForecastUpdates: {
-      name: "StreamForecastUpdates",
+    streamServerForecast: {
+      name: "StreamServerForecast",
       I: PublicForecastStreamRequest,
       O: PublicForecastPoint,
       kind: MethodKind.ServerStreaming,

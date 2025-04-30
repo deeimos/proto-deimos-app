@@ -9,7 +9,8 @@ GO_PROTO_FILES := $(shell find $(PROTO_DIR) -name "*.proto")
 PY_PROTO_FILES := $(PROTO_DIR)/forecast-api/forecast-api.proto
 
 PROTOC    := protoc
-TS_PLUGIN := ./node_modules/.bin/protoc-gen-ts
+PROTOC_GEN_JS := ./node_modules/.bin/protoc-gen-js
+PROTOC_GEN_TS := ./node_modules/.bin/protoc-gen-ts
 
 .PHONY: generate generate-go generate-python generate-web clean
 
@@ -30,15 +31,16 @@ generate-python:
 		$(PY_PROTO_FILES)
 
 generate-web:
-	@mkdir -p $(WEB_OUT_DIR)
-
+	@mkdir -p $(WEB_OUT_DIR)/public-api
 	$(PROTOC) -I $(PROTO_DIR) \
-	  --plugin=protoc-gen-ts=$(TS_PLUGIN) \
-	  --ts_out=service=grpc-web:$(WEB_OUT_DIR) \
-	    $(PROTO_DIR)/public-api/public-auth.proto \
-	    $(PROTO_DIR)/public-api/public-servers.proto \
-	    $(PROTO_DIR)/public-api/public-monitoring.proto \
-	    $(PROTO_DIR)/public-api/public-forecast.proto
+	  --plugin=protoc-gen-js=$(PROTOC_GEN_JS) \
+	  --plugin=protoc-gen-ts=$(PROTOC_GEN_TS) \
+	  --js_out=import_style=commonjs,binary:$(WEB_OUT_DIR)/public-api \
+	  --ts_out=service=grpc-web:$(WEB_OUT_DIR)/public-api \
+	  $(PROTO_DIR)/public-api/public-auth.proto \
+	  $(PROTO_DIR)/public-api/public-servers.proto \
+	  $(PROTO_DIR)/public-api/public-monitoring.proto \
+	  $(PROTO_DIR)/public-api/public-forecast.proto
 
 clean:
 	rm -rf gen/*

@@ -7,5 +7,9 @@
   "devDependencies": {
     "google-protobuf": "^3.21.4",
     "ts-protoc-gen": "^0.15.0"
+  },
+  "dependencies": {
+    "protoc-gen-js": "^3.21.4-4",
+    "protoc-gen-ts": "^0.8.7"
   }
 }

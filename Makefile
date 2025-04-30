@@ -32,11 +32,11 @@ generate-python:
 		$(PY_PROTO_FILES)
 
 generate-web:
-	@mkdir -p $(WEB_OUT_DIR)/public-api
+	@mkdir -p $(WEB_OUT_DIR)
 	$(PROTOC) -I $(PROTO_DIR) \
 	  --plugin=protoc-gen-ts=$(PROTOC_GEN_TS) \
-	  --js_out=import_style=commonjs,binary:$(WEB_OUT_DIR)/public-api \
-	  --ts_out=service=grpc-web:$(WEB_OUT_DIR)/public-api \
+	  --js_out=import_style=commonjs,binary:$(WEB_OUT_DIR) \
+	  --ts_out=service=grpc-web:$(WEB_OUT_DIR) \
 	  $(PROTO_DIR)/public-api/public-auth.proto \
 	  $(PROTO_DIR)/public-api/public-servers.proto \
 	  $(PROTO_DIR)/public-api/public-monitoring.proto \

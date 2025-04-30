@@ -1,21 +1,24 @@
-import * as jspb from 'google-protobuf'
+// package: public_api
+// file: public-api/public-auth.proto
 
-import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb'; // proto import: "google/protobuf/timestamp.proto"
-
+import * as jspb from "google-protobuf";
+import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
 export class RegisterRequest extends jspb.Message {
   getName(): string;
-  setName(value: string): RegisterRequest;
+  setName(value: string): void;
 
   getEmail(): string;
-  setEmail(value: string): RegisterRequest;
+  setEmail(value: string): void;
 
   getPassword(): string;
-  setPassword(value: string): RegisterRequest;
+  setPassword(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RegisterRequest.AsObject;
   static toObject(includeInstance: boolean, msg: RegisterRequest): RegisterRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: RegisterRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RegisterRequest;
   static deserializeBinaryFromReader(message: RegisterRequest, reader: jspb.BinaryReader): RegisterRequest;
@@ -31,28 +34,30 @@ export namespace RegisterRequest {
 
 export class RegisterResponse extends jspb.Message {
   getId(): string;
-  setId(value: string): RegisterResponse;
+  setId(value: string): void;
 
   getEmail(): string;
-  setEmail(value: string): RegisterResponse;
+  setEmail(value: string): void;
 
   getName(): string;
-  setName(value: string): RegisterResponse;
+  setName(value: string): void;
 
-  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): RegisterResponse;
   hasCreatedAt(): boolean;
-  clearCreatedAt(): RegisterResponse;
+  clearCreatedAt(): void;
+  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): void;
 
   getToken(): string;
-  setToken(value: string): RegisterResponse;
+  setToken(value: string): void;
 
   getRefreshToken(): string;
-  setRefreshToken(value: string): RegisterResponse;
+  setRefreshToken(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RegisterResponse.AsObject;
   static toObject(includeInstance: boolean, msg: RegisterResponse): RegisterResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: RegisterResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RegisterResponse;
   static deserializeBinaryFromReader(message: RegisterResponse, reader: jspb.BinaryReader): RegisterResponse;
@@ -71,14 +76,16 @@ export namespace RegisterResponse {
 
 export class LoginRequest extends jspb.Message {
   getEmail(): string;
-  setEmail(value: string): LoginRequest;
+  setEmail(value: string): void;
 
   getPassword(): string;
-  setPassword(value: string): LoginRequest;
+  setPassword(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LoginRequest.AsObject;
   static toObject(includeInstance: boolean, msg: LoginRequest): LoginRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: LoginRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): LoginRequest;
   static deserializeBinaryFromReader(message: LoginRequest, reader: jspb.BinaryReader): LoginRequest;
@@ -93,28 +100,30 @@ export namespace LoginRequest {
 
 export class LoginResponse extends jspb.Message {
   getId(): string;
-  setId(value: string): LoginResponse;
+  setId(value: string): void;
 
   getEmail(): string;
-  setEmail(value: string): LoginResponse;
+  setEmail(value: string): void;
 
   getName(): string;
-  setName(value: string): LoginResponse;
+  setName(value: string): void;
 
-  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): LoginResponse;
   hasCreatedAt(): boolean;
-  clearCreatedAt(): LoginResponse;
+  clearCreatedAt(): void;
+  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): void;
 
   getToken(): string;
-  setToken(value: string): LoginResponse;
+  setToken(value: string): void;
 
   getRefreshToken(): string;
-  setRefreshToken(value: string): LoginResponse;
+  setRefreshToken(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LoginResponse.AsObject;
   static toObject(includeInstance: boolean, msg: LoginResponse): LoginResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: LoginResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): LoginResponse;
   static deserializeBinaryFromReader(message: LoginResponse, reader: jspb.BinaryReader): LoginResponse;
@@ -133,11 +142,13 @@ export namespace LoginResponse {
 
 export class RefreshRequest extends jspb.Message {
   getRefreshToken(): string;
-  setRefreshToken(value: string): RefreshRequest;
+  setRefreshToken(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RefreshRequest.AsObject;
   static toObject(includeInstance: boolean, msg: RefreshRequest): RefreshRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: RefreshRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RefreshRequest;
   static deserializeBinaryFromReader(message: RefreshRequest, reader: jspb.BinaryReader): RefreshRequest;
@@ -151,14 +162,16 @@ export namespace RefreshRequest {
 
 export class RefreshResponse extends jspb.Message {
   getToken(): string;
-  setToken(value: string): RefreshResponse;
+  setToken(value: string): void;
 
   getRefreshToken(): string;
-  setRefreshToken(value: string): RefreshResponse;
+  setRefreshToken(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RefreshResponse.AsObject;
   static toObject(includeInstance: boolean, msg: RefreshResponse): RefreshResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: RefreshResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RefreshResponse;
   static deserializeBinaryFromReader(message: RefreshResponse, reader: jspb.BinaryReader): RefreshResponse;
@@ -175,6 +188,8 @@ export class GetUserRequest extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetUserRequest.AsObject;
   static toObject(includeInstance: boolean, msg: GetUserRequest): GetUserRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: GetUserRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetUserRequest;
   static deserializeBinaryFromReader(message: GetUserRequest, reader: jspb.BinaryReader): GetUserRequest;
@@ -187,22 +202,24 @@ export namespace GetUserRequest {
 
 export class GetUserResponse extends jspb.Message {
   getId(): string;
-  setId(value: string): GetUserResponse;
+  setId(value: string): void;
 
   getName(): string;
-  setName(value: string): GetUserResponse;
+  setName(value: string): void;
 
   getEmail(): string;
-  setEmail(value: string): GetUserResponse;
+  setEmail(value: string): void;
 
-  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): GetUserResponse;
   hasCreatedAt(): boolean;
-  clearCreatedAt(): GetUserResponse;
+  clearCreatedAt(): void;
+  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetUserResponse.AsObject;
   static toObject(includeInstance: boolean, msg: GetUserResponse): GetUserResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
   static serializeBinaryToWriter(message: GetUserResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetUserResponse;
   static deserializeBinaryFromReader(message: GetUserResponse, reader: jspb.BinaryReader): GetUserResponse;

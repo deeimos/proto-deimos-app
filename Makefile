@@ -10,7 +10,8 @@ PY_PROTO_FILES := $(PROTO_DIR)/forecast-api/forecast-api.proto
 
 PROTOC    := protoc
 PROTOC_GEN_JS := ./node_modules/.bin/protoc-gen-js
-PROTOC_GEN_TS := ./node_modules/.bin/protoc-gen-ts
+PROTOC_GEN_TS := ./node_modules/ts-protoc-gen/bin/protoc-gen-ts
+
 
 .PHONY: generate generate-go generate-python generate-web clean
 
@@ -33,7 +34,6 @@ generate-python:
 generate-web:
 	@mkdir -p $(WEB_OUT_DIR)/public-api
 	$(PROTOC) -I $(PROTO_DIR) \
-	  --plugin=protoc-gen-js=$(PROTOC_GEN_JS) \
 	  --plugin=protoc-gen-ts=$(PROTOC_GEN_TS) \
 	  --js_out=import_style=commonjs,binary:$(WEB_OUT_DIR)/public-api \
 	  --ts_out=service=grpc-web:$(WEB_OUT_DIR)/public-api \

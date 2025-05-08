@@ -13,8 +13,6 @@ service ServersAPI {
   rpc GetServersList(GetServersListRequest) returns (GetServersListResponse) {};
   rpc DeleteServer (DeleteServerRequest) returns (DeleteServerResponse) {};
   rpc StreamServerMetrics(ServerMetricsRequest) returns (stream ServerMetric) {};
-  rpc ServerForecast (ServerForecastRequest) returns (ServerForecastResponse) {};
-  rpc StreamServerForecast(ServerForecastStreamRequest) returns (stream ServerForecastPoint) {};
 }
 
 message CreateServerRequest {
@@ -53,7 +51,9 @@ message GetServerResponse {
   string encrypted_port = 3;
   string encrypted_display_name = 4;
   bool is_monitoring_enabled = 5;
-  google.protobuf.Timestamp created_at = 6;
+  bool is_server_enabled = 6;
+  google.protobuf.Timestamp created_at = 7;
+  repeated ServerForecastPoint forecasts = 8;
 }
 
 message GetServersListRequest {
@@ -95,21 +95,6 @@ message ServerMetric {
   double temperature = 14;
   string status = 15;
   google.protobuf.Timestamp timestamp = 16;
-}
-
-message ServerForecastRequest {
-  string user_id = 1;
-  string server_id = 2;
-}
-
-message ServerForecastResponse {
-  string server_id = 1;
-  repeated ServerForecastPoint forecasts = 2;
-}
-
-message ServerForecastStreamRequest {
-  string user_id = 1;
-  string server_id = 2;
 }
 
 message ServerForecastPoint {

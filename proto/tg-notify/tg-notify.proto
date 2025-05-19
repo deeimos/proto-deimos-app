@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package tg_notify_api;
+
+option go_package = "deimos.tg_notify_api.v1;tg_notify_apiv1";
+
+service TgNotifyAPI {
+  rpc IsBinded (IsBindedRequest) returns (IsBindedResponse);
+  rpc BindUser (BindUserRequest) returns (BindUserResponse);
+  rpc UnbindUser (UnbindUserRequest) returns (UnbindUserResponse);
+  rpc NotifyUser (NotifyUserRequest) returns (NotifyUserResponse);
+  rpc NotifyByServer (NotifyByServerRequest) returns (NotifyByServerResponse);
+}
+
+message IsBindedRequest {
+  string user_id = 1;
+}
+
+message IsBindedResponse {
+  bool is_binded = 1;
+  string username = 2;
+}
+
+message BindUserRequest {
+  string user_id = 1;
+  string token = 2;
+}
+
+message BindUserResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message UnbindUserRequest {
+  string user_id = 1;
+}
+
+message UnbindUserResponse {
+  string status = 1;
+}
+
+message NotifyUserRequest {
+  string user_id = 1;
+  string message = 2;
+}
+
+message NotifyUserResponse {
+  string status = 1;
+}
+
+message NotifyByServerRequest {
+  string user_id = 1;
+  string server_id = 2;
+  string message = 3;
+}
+
+message NotifyByServerResponse {
+  string status = 1;
+}

@@ -24,6 +24,7 @@ const (
 	TgNotifyAPI_UnbindUser_FullMethodName     = "/tg_notify_api.TgNotifyAPI/UnbindUser"
 	TgNotifyAPI_NotifyUser_FullMethodName     = "/tg_notify_api.TgNotifyAPI/NotifyUser"
 	TgNotifyAPI_NotifyByServer_FullMethodName = "/tg_notify_api.TgNotifyAPI/NotifyByServer"
+	TgNotifyAPI_SendInfo_FullMethodName       = "/tg_notify_api.TgNotifyAPI/SendInfo"
 )
 
 // TgNotifyAPIClient is the client API for TgNotifyAPI service.
@@ -33,8 +34,9 @@ type TgNotifyAPIClient interface {
 	IsBinded(ctx context.Context, in *IsBindedRequest, opts ...grpc.CallOption) (*IsBindedResponse, error)
 	BindUser(ctx context.Context, in *BindUserRequest, opts ...grpc.CallOption) (*BindUserResponse, error)
 	UnbindUser(ctx context.Context, in *UnbindUserRequest, opts ...grpc.CallOption) (*UnbindUserResponse, error)
-	NotifyUser(ctx context.Context, in *NotifyUserRequest, opts ...grpc.CallOption) (*NotifyUserResponse, error)
-	NotifyByServer(ctx context.Context, in *NotifyByServerRequest, opts ...grpc.CallOption) (*NotifyByServerResponse, error)
+	NotifyUser(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*ResultResponse, error)
+	NotifyByServer(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*ResultResponse, error)
+	SendInfo(ctx context.Context, in *SendInfoRequest, opts ...grpc.CallOption) (*ResultResponse, error)
 }
 
 type tgNotifyAPIClient struct {
@@ -75,9 +77,9 @@ func (c *tgNotifyAPIClient) UnbindUser(ctx context.Context, in *UnbindUserReques
 	return out, nil
 }
 
-func (c *tgNotifyAPIClient) NotifyUser(ctx context.Context, in *NotifyUserRequest, opts ...grpc.CallOption) (*NotifyUserResponse, error) {
+func (c *tgNotifyAPIClient) NotifyUser(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*ResultResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(NotifyUserResponse)
+	out := new(ResultResponse)
 	err := c.cc.Invoke(ctx, TgNotifyAPI_NotifyUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -85,10 +87,20 @@ func (c *tgNotifyAPIClient) NotifyUser(ctx context.Context, in *NotifyUserReques
 	return out, nil
 }
 
-func (c *tgNotifyAPIClient) NotifyByServer(ctx context.Context, in *NotifyByServerRequest, opts ...grpc.CallOption) (*NotifyByServerResponse, error) {
+func (c *tgNotifyAPIClient) NotifyByServer(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*ResultResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(NotifyByServerResponse)
+	out := new(ResultResponse)
 	err := c.cc.Invoke(ctx, TgNotifyAPI_NotifyByServer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tgNotifyAPIClient) SendInfo(ctx context.Context, in *SendInfoRequest, opts ...grpc.CallOption) (*ResultResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResultResponse)
+	err := c.cc.Invoke(ctx, TgNotifyAPI_SendInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -102,8 +114,9 @@ type TgNotifyAPIServer interface {
 	IsBinded(context.Context, *IsBindedRequest) (*IsBindedResponse, error)
 	BindUser(context.Context, *BindUserRequest) (*BindUserResponse, error)
 	UnbindUser(context.Context, *UnbindUserRequest) (*UnbindUserResponse, error)
-	NotifyUser(context.Context, *NotifyUserRequest) (*NotifyUserResponse, error)
-	NotifyByServer(context.Context, *NotifyByServerRequest) (*NotifyByServerResponse, error)
+	NotifyUser(context.Context, *NotifyRequest) (*ResultResponse, error)
+	NotifyByServer(context.Context, *NotifyRequest) (*ResultResponse, error)
+	SendInfo(context.Context, *SendInfoRequest) (*ResultResponse, error)
 	mustEmbedUnimplementedTgNotifyAPIServer()
 }
 
@@ -123,11 +136,14 @@ func (UnimplementedTgNotifyAPIServer) BindUser(context.Context, *BindUserRequest
 func (UnimplementedTgNotifyAPIServer) UnbindUser(context.Context, *UnbindUserRequest) (*UnbindUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnbindUser not implemented")
 }
-func (UnimplementedTgNotifyAPIServer) NotifyUser(context.Context, *NotifyUserRequest) (*NotifyUserResponse, error) {
+func (UnimplementedTgNotifyAPIServer) NotifyUser(context.Context, *NotifyRequest) (*ResultResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NotifyUser not implemented")
 }
-func (UnimplementedTgNotifyAPIServer) NotifyByServer(context.Context, *NotifyByServerRequest) (*NotifyByServerResponse, error) {
+func (UnimplementedTgNotifyAPIServer) NotifyByServer(context.Context, *NotifyRequest) (*ResultResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NotifyByServer not implemented")
+}
+func (UnimplementedTgNotifyAPIServer) SendInfo(context.Context, *SendInfoRequest) (*ResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendInfo not implemented")
 }
 func (UnimplementedTgNotifyAPIServer) mustEmbedUnimplementedTgNotifyAPIServer() {}
 func (UnimplementedTgNotifyAPIServer) testEmbeddedByValue()                     {}
@@ -205,7 +221,7 @@ func _TgNotifyAPI_UnbindUser_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _TgNotifyAPI_NotifyUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NotifyUserRequest)
+	in := new(NotifyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -217,13 +233,13 @@ func _TgNotifyAPI_NotifyUser_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: TgNotifyAPI_NotifyUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TgNotifyAPIServer).NotifyUser(ctx, req.(*NotifyUserRequest))
+		return srv.(TgNotifyAPIServer).NotifyUser(ctx, req.(*NotifyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TgNotifyAPI_NotifyByServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NotifyByServerRequest)
+	in := new(NotifyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -235,7 +251,25 @@ func _TgNotifyAPI_NotifyByServer_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: TgNotifyAPI_NotifyByServer_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TgNotifyAPIServer).NotifyByServer(ctx, req.(*NotifyByServerRequest))
+		return srv.(TgNotifyAPIServer).NotifyByServer(ctx, req.(*NotifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TgNotifyAPI_SendInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TgNotifyAPIServer).SendInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TgNotifyAPI_SendInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TgNotifyAPIServer).SendInfo(ctx, req.(*SendInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -266,6 +300,10 @@ var TgNotifyAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "NotifyByServer",
 			Handler:    _TgNotifyAPI_NotifyByServer_Handler,
+		},
+		{
+			MethodName: "SendInfo",
+			Handler:    _TgNotifyAPI_SendInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

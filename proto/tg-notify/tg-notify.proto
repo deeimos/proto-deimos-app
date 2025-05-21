@@ -8,8 +8,9 @@ service TgNotifyAPI {
   rpc IsBinded (IsBindedRequest) returns (IsBindedResponse);
   rpc BindUser (BindUserRequest) returns (BindUserResponse);
   rpc UnbindUser (UnbindUserRequest) returns (UnbindUserResponse);
-  rpc NotifyUser (NotifyUserRequest) returns (NotifyUserResponse);
-  rpc NotifyByServer (NotifyByServerRequest) returns (NotifyByServerResponse);
+  rpc NotifyUser (NotifyRequest) returns (ResultResponse);
+  rpc NotifyByServer (NotifyRequest) returns (ResultResponse);
+  rpc SendInfo (SendInfoRequest) returns (ResultResponse);
 }
 
 message IsBindedRequest {
@@ -39,21 +40,17 @@ message UnbindUserResponse {
   string status = 1;
 }
 
-message NotifyUserRequest {
-  string user_id = 1;
-  string message = 2;
-}
-
-message NotifyUserResponse {
-  string status = 1;
-}
-
-message NotifyByServerRequest {
+message NotifyRequest {
   string user_id = 1;
   string server_id = 2;
   string message = 3;
 }
 
-message NotifyByServerResponse {
-  string status = 1;
+message SendInfoRequest {
+    string user_id = 1;
+    string message = 2;
+}
+
+message ResultResponse {
+    string status = 1;
 }

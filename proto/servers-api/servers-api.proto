@@ -79,22 +79,24 @@ message ServerMetricsRequest {
 }
 
 message ServerMetric {
-  double cpu_usage = 1;
-  double memory_usage = 2;
-  double disk_usage = 3;
-  double load_avg_1 = 4;
-  double load_avg_5 = 5;
-  double load_avg_15 = 6;
-  double network_rx = 7;
-  double network_tx = 8;
-  double disk_read = 9;
-  double disk_write = 10;
-  int32 process_count = 11;
-  double io_wait = 12;
-  int64 uptime_seconds = 13;
-  double temperature = 14;
-  string status = 15;
-  google.protobuf.Timestamp timestamp = 16;
+  double total_memory = 1;
+  int32 cpu_core_count = 2;
+  double cpu_usage = 3;
+  double memory_usage = 4;
+  double disk_usage = 5;
+  double load_avg_1 = 6;
+  double load_avg_5 = 7;
+  double load_avg_15 = 8;
+  double network_rx = 9;
+  double network_tx = 10;
+  double disk_read = 11;
+  double disk_write = 12;
+  int32 process_count = 13;
+  double io_wait = 14;
+  int64 uptime_seconds = 15;
+  double temperature = 16;
+  string status = 17;
+  google.protobuf.Timestamp timestamp = 18;
 }
 
 message ServerForecastRequest {
